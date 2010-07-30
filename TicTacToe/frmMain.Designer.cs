@@ -40,15 +40,15 @@
             this.radComp = new System.Windows.Forms.RadioButton();
             this.btnNewGame = new System.Windows.Forms.Button();
             this.lblTurn = new System.Windows.Forms.Label();
-            this.Button9 = new System.Windows.Forms.Button();
-            this.Button8 = new System.Windows.Forms.Button();
-            this.Button7 = new System.Windows.Forms.Button();
-            this.Button6 = new System.Windows.Forms.Button();
-            this.Button5 = new System.Windows.Forms.Button();
-            this.Button4 = new System.Windows.Forms.Button();
-            this.Button3 = new System.Windows.Forms.Button();
-            this.Button2 = new System.Windows.Forms.Button();
-            this.Button1 = new System.Windows.Forms.Button();
+            this.Button9 = new btnSquare();
+            this.Button8 = new btnSquare();
+            this.Button7 = new btnSquare();
+            this.Button6 = new btnSquare();
+            this.Button5 = new btnSquare();
+            this.Button4 = new btnSquare();
+            this.Button3 = new btnSquare();
+            this.Button2 = new btnSquare();
+            this.Button1 = new btnSquare();
             this.GroupBox1.SuspendLayout();
             this.grpMode.SuspendLayout();
             this.SuspendLayout();
@@ -62,6 +62,7 @@
             // 
             // GroupBox1
             // 
+            this.GroupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox1.Controls.Add(this.radImp);
             this.GroupBox1.Controls.Add(this.radHard);
             this.GroupBox1.Controls.Add(this.radNormal);
@@ -122,9 +123,10 @@
             // 
             // btnExit
             // 
+            this.btnExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnExit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.btnExit.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
-            this.btnExit.Location = new System.Drawing.Point(251, 279);
+            this.btnExit.Location = new System.Drawing.Point(290, 279);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(134, 35);
             this.btnExit.TabIndex = 30;
@@ -134,9 +136,10 @@
             // 
             // grpMode
             // 
+            this.grpMode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.grpMode.Controls.Add(this.rad2P);
             this.grpMode.Controls.Add(this.radComp);
-            this.grpMode.Location = new System.Drawing.Point(242, 64);
+            this.grpMode.Location = new System.Drawing.Point(258, 62);
             this.grpMode.Name = "grpMode";
             this.grpMode.Size = new System.Drawing.Size(166, 61);
             this.grpMode.TabIndex = 29;
@@ -167,9 +170,10 @@
             // 
             // btnNewGame
             // 
+            this.btnNewGame.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnNewGame.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.btnNewGame.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNewGame.Location = new System.Drawing.Point(248, 238);
+            this.btnNewGame.Location = new System.Drawing.Point(287, 238);
             this.btnNewGame.Name = "btnNewGame";
             this.btnNewGame.Size = new System.Drawing.Size(138, 35);
             this.btnNewGame.TabIndex = 28;
@@ -179,10 +183,11 @@
             // 
             // lblTurn
             // 
+            this.lblTurn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTurn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.lblTurn.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lblTurn.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTurn.Location = new System.Drawing.Point(248, 9);
+            this.lblTurn.Location = new System.Drawing.Point(328, 6);
             this.lblTurn.Name = "lblTurn";
             this.lblTurn.Size = new System.Drawing.Size(97, 50);
             this.lblTurn.TabIndex = 27;
@@ -332,15 +337,15 @@
         internal System.Windows.Forms.RadioButton radComp;
         internal System.Windows.Forms.Button btnNewGame;
         internal System.Windows.Forms.Label lblTurn;
-        internal System.Windows.Forms.Button Button9;
-        internal System.Windows.Forms.Button Button8;
-        internal System.Windows.Forms.Button Button7;
-        internal System.Windows.Forms.Button Button6;
-        internal System.Windows.Forms.Button Button5;
-        internal System.Windows.Forms.Button Button4;
-        internal System.Windows.Forms.Button Button3;
-        internal System.Windows.Forms.Button Button2;
-        internal System.Windows.Forms.Button Button1;
+        internal btnSquare Button9;
+        internal btnSquare Button8;
+        internal btnSquare Button7;
+        internal btnSquare Button6;
+        internal btnSquare Button5;
+        internal btnSquare Button4;
+        internal btnSquare Button3;
+        internal btnSquare Button2;
+        internal btnSquare Button1;
     }
 }
 
