@@ -11,6 +11,10 @@ namespace TicTacToe
 {
 	public partial class frmMain : Form
 	{
+		/// <summary>
+		/// An array for storing the 9 squares
+		/// in this game.
+		/// </summary>
 		btnSquare[] btnArray;
 		uint turns = 0;
 		bool blnComp = true;
@@ -32,11 +36,13 @@ namespace TicTacToe
 			Application.Exit();
 		}
 
+		/// <summary>
+		/// The method handler for all of the buttons being clicked.
+		/// </summary>
 		private void makeMove(object sender, EventArgs e)
 		{
-			++turns;
 			btnSquare button_pressed = (btnSquare)sender;
-			lblturns.Text = turns + " Turns";
+			lblturns.Text = ++turns + " Turns";
 			if (lblTurn.Text == "X")
 			{
 				button_pressed.setX();
@@ -59,129 +65,121 @@ namespace TicTacToe
 				blnComp = true;
 			}
 		}
-		public btnSquare ComputerMove()
+		/*
+			Here is where this implementation truly shines.
+			I've coded an impossible mode, where you can only either
+			draw or lose.
+
+			The human readable instructions for this strategy
+			are freely available on Wikipedia:
+
+			http://en.wikipedia.org/wiki/Tic_tac_toe#Strategy
+		*/
+
+		/// <summary>
+		/// This function heavily improves program flow by 
+		/// checking the moves from a single function, instead
+		/// of just repeating a lot of code.
+		/// </summary>
+		/// <param name="orientation">The current orientation that needs to be checked.</param>
+		/// <param name="toChk">The 3-long integer array which tells which two to check, and which to return if successful.</param>
+		/// <param name="isX">Tell the function whether to verify against X (true) or O (false).</param>
+		/// <returns></returns>
+		private btnSquare checkMove(int[] orientation, int[] toChk, bool isX)
+		{
+			return (btnArray[orientation[toChk[0]]].autoCheck(isX)
+				 && btnArray[orientation[toChk[1]]].autoCheck(isX)
+				 && btnArray[orientation[toChk[2]]].Enabled) 
+				 
+				 ? btnArray[orientation[toChk[2]]]
+				 : null;
+		}
+
+		/// <summary>
+		/// Returns the square which the Computer would pick,
+		/// based on the selected difficulty.
+		/// </summary>
+		private btnSquare ComputerMove()
 		{
 			Random generator = new Random();
-			btnSquare[][] orientations = new btnSquare[][] {
-				new btnSquare[] { // north
-					Button1,
-					Button2,
-					Button3,
-					Button4,
-					Button5,
-					Button6,
-					Button7,
-					Button8,
-					Button9
+			int[][] orientations = new int[][] {
+				new int[] { // north
+					0, 1, 2,
+					3, 4, 5,
+					6, 7, 8
 				},
-				new btnSquare[] { // northr
-					Button3,
-					Button2,
-					Button1,
-					Button6,
-					Button5,
-					Button4,
-					Button9,
-					Button8,
-					Button7
+				new int[] { // northr
+					2, 1, 0,
+					5, 4, 3,
+					8, 7, 6
 				},
-				new btnSquare[] { // east
-					Button3,
-					Button6,
-					Button9,
-					Button2,
-					Button5,
-					Button8,
-					Button1,
-					Button4,
-					Button7
+				new int[] { // east
+					2, 5, 8,
+					1, 4, 7,
+					0, 3, 6
 				},
-				new btnSquare[] { // eastr
-					Button9,
-					Button6,
-					Button3,
-					Button8,
-					Button5,
-					Button2,
-					Button7,
-					Button4,
-					Button1
+				new int[] { // eastr
+					8, 5, 2,
+					7, 4, 1,
+					6, 3, 0
 				},
-				new btnSquare[] { // west
-					Button7,
-					Button4,
-					Button1,
-					Button8,
-					Button5,
-					Button2,
-					Button9,
-					Button6,
-					Button3
+				new int[] { // west
+					6, 3, 0,
+					7, 4, 1,
+					8, 5, 2
 				},
-				new btnSquare[] { // westr
-					Button1,
-					Button4,
-					Button7,
-					Button2,
-					Button5,
-					Button8,
-					Button3,
-					Button6,
-					Button9
+				new int[] { // westr
+					0, 3, 6,
+					1, 4, 7,
+					2, 5, 8
 				},
-				new btnSquare[] { // south
-					Button9,
-					Button8,
-					Button7,
-					Button6,
-					Button5,
-					Button4,
-					Button3,
-					Button2,
-					Button1
+				new int[] { // south
+					8, 7, 6,
+					5, 4, 3,
+					2, 1, 0
 				},
-				new btnSquare[] { // southr
-					Button7,
-					Button8,
-					Button9,
-					Button4,
-					Button5,
-					Button6,
-					Button1,
-					Button2,
-					Button3
+				new int[] { // southr
+					6, 7, 8,
+					3, 4, 5,
+					0, 1, 2 
 				}
 			};
 			//win
 			if (radHard.Checked || radImp.Checked)
 			{
-				foreach (btnSquare[] rot in orientations)
+				foreach (int[] rot in orientations)
 				{
-					if (rot[0].isO() && rot[1].isO() && rot[2].Enabled)
-						return rot[2];
-					//midmiss
-					if (rot[0].isO() && rot[2].isO() && rot[1].Enabled)
-						return rot[1];
-					if (rot[0].isO() && Button5.isO() && rot[8].Enabled)
-						return rot[8];
-					//3
-					if (rot[3].isO() && Button5.isO() && rot[5].Enabled)
-						return rot[5];
+					int[][] checks = {
+						new int[] {0, 1, 2},
+						new int[] {0, 2, 1},
+						new int[] {0, 4, 8},
+						new int[] {3, 4, 5}
+					};
+					btnSquare temp;
+					for (int i = 0; i < checks.Length; ++i)
+					{
+						temp = checkMove(rot, checks[i], false);
+						if (temp != null) return temp;
+					}
 				}
 			}
 			//defend
 			if (radNormal.Checked || radHard.Checked || radImp.Checked)
 			{
-				foreach (btnSquare[] rot in orientations)
+				foreach (int[] rot in orientations)
 				{
-					if (rot[0].isX() && rot[1].isX() && rot[2].Enabled)
-						return rot[2];
-					if (rot[0].isX() && rot[2].isX() && rot[1].Enabled)
-						return rot[1];
-					if (rot[0].isX() && Button5.isX() && rot[8].Enabled)
-						return rot[8];
-					if (rot[3].isX() && Button5.isX() && rot[5].Enabled)
-						return rot[5];
+					int[][] checks = {
+						new int[] {0, 1, 2},
+						new int[] {0, 2, 1},
+						new int[] {0, 4, 8},
+						new int[] {3, 4, 5}
+					};
+					btnSquare temp;
+					for (int i = 0; i < checks.Length; ++i)
+					{
+						temp = checkMove(rot, checks[i], true);
+						if (temp != null) return temp;
+					}
 				}
 			}
 			if (radImp.Checked)
@@ -190,139 +188,188 @@ namespace TicTacToe
 				//								   FORKING
 				//<-------------------------------------------------------------------------->
 				//<--a-->
-				foreach (btnSquare[] rot in orientations)
+				foreach (int[] rot in orientations)
 				{
-					if (rot[0].isO() && rot[2].isO() && Button5.Enabled)
-						return Button5;
-					if (rot[0].isO() && Button5.isO() && rot[2].Enabled)
-						return rot[2];
-					if (rot[2].isO() && Button5.isO() && rot[0].Enabled)
-						return rot[0];
+					int[][] checks = {
+						new int[] {0, 2, 4},
+						new int[] {0, 4, 2},
+						new int[] {2, 4, 0}
+					};
+					btnSquare temp;
+					for (int i = 0; i < checks.Length; ++i)
+					{
+						temp = checkMove(rot, checks[i], false);
+						if (temp != null) return temp;
+					}
 				}
 				//<--b-->
-				foreach (btnSquare[] rot in orientations)
+				foreach (int[] rot in orientations)
 				{
-					if (Button5.isO() && rot[6].isO() && rot[7].Enabled)
-						return rot[7];
-					if (Button5.isO() && rot[7].isO() && rot[6].Enabled)
-						return rot[6];
-					if (rot[7].isO() && rot[6].isO() && Button5.Enabled)
-						return Button5;
+					int[][] checks = {
+						new int[] {4, 6, 7},
+						new int[] {4, 7, 6},
+						new int[] {7, 6, 4}
+					};
+					btnSquare temp;
+					for (int i = 0; i < checks.Length; ++i)
+					{
+						temp = checkMove(rot, checks[i], false);
+						if (temp != null) return temp;
+					}
 				}
 				//<--c-->
-				foreach (btnSquare[] rot in orientations)
+				foreach (int[] rot in orientations)
 				{
-					if (rot[0].isO() && rot[1].isO() && rot[3].Enabled)
-						return rot[3];
-					if (rot[0].isO() && rot[3].isO() && rot[1].Enabled)
-						return rot[1];
-					if (rot[3].isO() && rot[1].isO() && rot[0].Enabled)
-						return rot[0];
+					int[][] checks = {
+						new int[] {0, 1, 3},
+						new int[] {0, 3, 1},
+						new int[] {3, 1, 0}
+					};
+					btnSquare temp;
+					for (int i = 0; i < checks.Length; ++i)
+					{
+						temp = checkMove(rot, checks[i], false);
+						if (temp != null) return temp;
+					}
 				}
 				//<--d-->
-				foreach (btnSquare[] rot in orientations)
+				foreach (int[] rot in orientations)
 				{
-					if (rot[0].isO() && rot[8].isO() && rot[6].Enabled)
-						return rot[6];
-					if (rot[0].isO() && rot[6].isO() && rot[2].Enabled)
-						return rot[2];
-					if (rot[0].isO() && rot[2].isO() && rot[6].Enabled)
-						return rot[6];
-					if (rot[6].isO() && rot[2].isO() && rot[0].Enabled)
-						return rot[0];
+					int[][] checks = {
+						new int[] {0, 8, 6},
+						new int[] {0, 6, 2},
+						new int[] {0, 2, 6},
+						new int[] {6, 2, 0}
+					};
+					btnSquare temp;
+					for (int i = 0; i < checks.Length; ++i)
+					{
+						temp = checkMove(rot, checks[i], false);
+						if (temp != null) return temp;
+					}
 				}
 				//<--e-->
-				foreach (btnSquare[] rot in orientations)
+				foreach (int[] rot in orientations)
 				{
-					if (rot[1].isO() && rot[6].isO() && rot[7].Enabled)
-						return rot[7];
-					if (rot[1].isO() && rot[7].isO() && rot[6].Enabled)
-						return rot[6];
-					if (rot[6].isO() && rot[7].isO() && rot[1].Enabled)
-						return rot[1];
+					int[][] checks = {
+						new int[] {1, 6, 7},
+						new int[] {1, 7, 6},
+						new int[] {6, 7, 1}
+					};
+					btnSquare temp;
+					for (int i = 0; i < checks.Length; ++i)
+					{
+						temp = checkMove(rot, checks[i], false);
+						if (temp != null) return temp;
+					}
 				}
 				//<-------------------------------------------------------------------------->
 				//							BLOCK FORKING
 				//<-------------------------------------------------------------------------->
 				//<--f-->
-				foreach (btnSquare[] rot in orientations)
+				foreach (int[] rot in orientations)
 				{
-					if (rot[0].isX() && rot[2].isX() && rot[5].Enabled)
-						return rot[5];
-					if (rot[0].isX() && rot[5].isX() && rot[2].Enabled)
-						return rot[2];
-					if (rot[5].isX() && rot[2].isX() && rot[0].Enabled)
-						return rot[0];
+					int[][] checks = {
+						new int[] {0, 2, 5},
+						new int[] {0, 5, 2},
+						new int[] {5, 2, 0}
+					};
+					btnSquare temp;
+					for (int i = 0; i < checks.Length; ++i)
+					{
+						temp = checkMove(rot, checks[i], true);
+						if (temp != null) return temp;
+					}
 				}
 				//<--a-->
-				foreach (btnSquare[] rot in orientations)
+				foreach (int[] rot in orientations)
 				{
-					if (rot[0].isX() && rot[2].isX() && Button5.Enabled)
-						return Button5;
-					if (rot[0].isX() && Button5.isX() && rot[2].Enabled)
-						return rot[2];
-					if (rot[2].isX() && Button5.isX() && rot[0].Enabled)
-						return rot[0];
+					int[][] checks = {
+						new int[] {0, 2, 4},
+						new int[] {0, 4, 2},
+						new int[] {2, 4, 0}
+					};
+					btnSquare temp;
+					for (int i = 0; i < checks.Length; ++i)
+					{
+						temp = checkMove(rot, checks[i], true);
+						if (temp != null) return temp;
+					}
 				}
 				//<--b-->
-				foreach (btnSquare[] rot in orientations)
+				foreach (int[] rot in orientations)
 				{
-					if (Button5.isX() && rot[6].isX() && rot[7].Enabled)
-						return rot[7];
-					if (Button5.isX() && rot[7].isX() && rot[6].Enabled)
-						return rot[6];
-					if (rot[7].isX() && rot[6].isX() && Button5.Enabled)
-						return Button5;
+					int[][] checks = {
+						new int[] {4, 6, 7},
+						new int[] {4, 7, 6},
+						new int[] {7, 6, 4}
+					};
+					btnSquare temp;
+					for (int i = 0; i < checks.Length; ++i)
+					{
+						temp = checkMove(rot, checks[i], true);
+						if (temp != null) return temp;
+					}
 				}
 				//<--c-->
-				foreach (btnSquare[] rot in orientations)
+				foreach (int[] rot in orientations)
 				{
-					if (rot[0].isX() && rot[1].isX() && rot[3].Enabled)
-						return rot[3];
-					if (rot[0].isX() && rot[3].isX() && rot[1].Enabled)
-						return rot[1];
-					if (rot[3].isX() && rot[1].isX() && rot[0].Enabled)
-						return rot[0];
+					int[][] checks = {
+						new int[] {0, 1, 3},
+						new int[] {0, 3, 1},
+						new int[] {3, 1, 0}
+					};
+					btnSquare temp;
+					for (int i = 0; i < checks.Length; ++i)
+					{
+						temp = checkMove(rot, checks[i], true);
+						if (temp != null) return temp;
+					}
 				}
 				//<--d-->
 				bool defend = false;
 				btnSquare badbut = default(btnSquare);
-				foreach (btnSquare[] rot in orientations)
+				foreach (int[] rot in orientations)
 				{
-					if (rot[0].isX() && rot[6].isX() && (rot[2].Enabled || rot[8].Enabled))
+					if (btnArray[rot[0]].isX() && btnArray[rot[6]].isX() && (btnArray[rot[2]].Enabled || btnArray[rot[8]].Enabled))
 					{
 						defend = true;
-						badbut = rot[2];
+						badbut = btnArray[rot[2]];
 					}
-					if (rot[0].isX() && rot[2].isX() && (rot[6].Enabled || rot[8].Enabled))
+					if (btnArray[rot[0]].isX() && btnArray[rot[2]].isX() && (btnArray[rot[6]].Enabled || btnArray[rot[8]].Enabled))
 					{
 						defend = true;
-						badbut = rot[6];
+						badbut = btnArray[rot[6]];
 					}
-					if (rot[6].isX() && rot[2].isX() && (rot[0].Enabled || rot[8].Enabled))
+					if (btnArray[rot[6]].isX() && btnArray[rot[2]].isX() && (btnArray[rot[0]].Enabled || btnArray[rot[8]].Enabled))
 					{
 						defend = true;
-						badbut = rot[0];
+						badbut = btnArray[rot[0]];
 					}
 					if (defend)
 					{
 						btnSquare theMove = Button1;
 						while (!theMove.Enabled || object.ReferenceEquals(theMove, badbut) || object.ReferenceEquals(theMove, rot[8]))
 						{
-							theMove = btnArray[generator.Next(0, 8)];
+							theMove = btnArray[generator.Next(1, 8)];
 						}
 						return theMove;
 					}
 				}
 				//<--e-->
-				foreach (btnSquare[] rot in orientations)
+				foreach (int[] rot in orientations)
 				{
-					if (rot[1].isX() && rot[6].isX() && rot[7].Enabled)
-						return rot[7];
-					if (rot[1].isX() && rot[7].isX() && rot[6].Enabled)
-						return rot[6];
-					if (rot[6].isX() && rot[7].isX() && rot[1].Enabled)
-						return rot[1];
+					int[][] checks = {
+						new int[] {1, 6, 7},
+						new int[] {1, 7, 6},
+						new int[] {6, 7, 1}
+					};
+					btnSquare temp;
+					for (int i = 0; i < checks.Length; ++i)
+					{
+						temp = checkMove(rot, checks[i], true);
+						if (temp != null) return temp;
+					}
 				}
 				//center
 				if (Button5.Enabled)
@@ -372,9 +419,12 @@ namespace TicTacToe
 			return compMove;
 		}
 
+		/// <summary>
+		/// Determines whether or not there is a winner,
+		/// and performs the prompts to play again.
+		/// </summary>
 		public bool Winner()
 		{
-			System.EventArgs nulle = null;
 			uint[][] winPaths = {
 				// Straight across
 				new uint[] {0, 1, 2},
@@ -421,11 +471,7 @@ namespace TicTacToe
 			}
 			if (intWinRar != 0)
 			{
-				DialogResult playgain = MessageBox.Show("Do you want to play again?", (intWinRar == 1 ? "X" : "O") + " Wins!!", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
-				if (playgain == DialogResult.Yes)
-					New_Game(null, nulle);
-				else
-					Application.Exit();
+				prompt("Do you want to play again?", (intWinRar == 1 ? "X" : "O") + " Wins!!");
 				return true;
 			}
 			bool blnDraw = true;
@@ -436,20 +482,29 @@ namespace TicTacToe
 			}
 			if (blnDraw)
 			{
-				DialogResult playgain = MessageBox.Show(radImp.Checked ? "I told you it was impossible! Want to try again, even though you won't win?" : "Do you want to play again?", radImp.Checked ? "It's a Draw ~ Give Up Already!" : "It's a Draw!!", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
-				if (playgain == DialogResult.Yes)
-					New_Game(null, nulle);
-				else
-					Application.Exit();
+				prompt(radImp.Checked ? "I told you it was impossible! Want to try again, even though you won't win?" : "Do you want to play again?", radImp.Checked ? "It's a Draw ~ Give Up Already!" : "It's a Draw!!");
 				return true;
 			}
 			return false;
 		}
-		private void New_Game(System.Object sender, System.EventArgs e)
+
+		/// <summary>
+		/// Ask the user if they want to play again or not, with custom messages.
+		/// </summary>
+		/// <param name="msg">The message you want to ask the user about.</param>
+		/// <param name="title">The title of the dialog.</param>
+		private void prompt(String msg, String title)
 		{
-			resetGame();
+			DialogResult playgain = MessageBox.Show(msg, title, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+			if (playgain == DialogResult.Yes)
+				resetGame();
+			else
+				Application.Exit();
 		}
 
+		/// <summary>
+		/// This function should be called whenever the game needs to be reset.
+		/// </summary>
 		private void resetGame()
 		{
 			turns = 0;

@@ -1,4 +1,5 @@
-﻿namespace TicTacToe
+﻿using TicTacToe;
+namespace TicTacToe
 {
 	partial class frmMain
 	{
@@ -337,15 +338,15 @@
 		internal System.Windows.Forms.RadioButton radComp;
 		internal System.Windows.Forms.Button btnNewGame;
 		internal System.Windows.Forms.Label lblTurn;
-		internal btnSquare Button9;
-		internal btnSquare Button8;
-		internal btnSquare Button7;
-		internal btnSquare Button6;
-		internal btnSquare Button5;
-		internal btnSquare Button4;
-		internal btnSquare Button3;
-		internal btnSquare Button2;
-		internal btnSquare Button1;
+		internal TicTacToe.btnSquare Button9;
+		internal TicTacToe.btnSquare Button8;
+		internal TicTacToe.btnSquare Button7;
+		internal TicTacToe.btnSquare Button6;
+		internal TicTacToe.btnSquare Button5;
+		internal TicTacToe.btnSquare Button4;
+		internal TicTacToe.btnSquare Button3;
+		internal TicTacToe.btnSquare Button2;
+		internal TicTacToe.btnSquare Button1;
 	}
 }
 
