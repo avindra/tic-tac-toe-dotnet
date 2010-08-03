@@ -187,71 +187,28 @@ namespace TicTacToe
 				//<-------------------------------------------------------------------------->
 				//								   FORKING
 				//<-------------------------------------------------------------------------->
-				//<--a-->
+
 				foreach (int[] rot in orientations)
 				{
 					int[][] checks = {
+		 				//<--a-->
 						new int[] {0, 2, 4},
 						new int[] {0, 4, 2},
-						new int[] {2, 4, 0}
-					};
-					btnSquare temp;
-					for (int i = 0; i < checks.Length; ++i)
-					{
-						temp = checkMove(rot, checks[i], false);
-						if (temp != null) return temp;
-					}
-				}
-				//<--b-->
-				foreach (int[] rot in orientations)
-				{
-					int[][] checks = {
+						new int[] {2, 4, 0},
+						//<--b-->
 						new int[] {4, 6, 7},
 						new int[] {4, 7, 6},
-						new int[] {7, 6, 4}
-					};
-					btnSquare temp;
-					for (int i = 0; i < checks.Length; ++i)
-					{
-						temp = checkMove(rot, checks[i], false);
-						if (temp != null) return temp;
-					}
-				}
-				//<--c-->
-				foreach (int[] rot in orientations)
-				{
-					int[][] checks = {
+						new int[] {7, 6, 4},
+						//<--c-->
 						new int[] {0, 1, 3},
 						new int[] {0, 3, 1},
-						new int[] {3, 1, 0}
-					};
-					btnSquare temp;
-					for (int i = 0; i < checks.Length; ++i)
-					{
-						temp = checkMove(rot, checks[i], false);
-						if (temp != null) return temp;
-					}
-				}
-				//<--d-->
-				foreach (int[] rot in orientations)
-				{
-					int[][] checks = {
+						new int[] {3, 1, 0},
+						//<--d-->
 						new int[] {0, 8, 6},
 						new int[] {0, 6, 2},
 						new int[] {0, 2, 6},
-						new int[] {6, 2, 0}
-					};
-					btnSquare temp;
-					for (int i = 0; i < checks.Length; ++i)
-					{
-						temp = checkMove(rot, checks[i], false);
-						if (temp != null) return temp;
-					}
-				}
-				//<--e-->
-				foreach (int[] rot in orientations)
-				{
-					int[][] checks = {
+						new int[] {6, 2, 0},
+						//<--e-->
 						new int[] {1, 6, 7},
 						new int[] {1, 7, 6},
 						new int[] {6, 7, 1}
@@ -281,43 +238,26 @@ namespace TicTacToe
 						if (temp != null) return temp;
 					}
 				}
-				//<--a-->
+
 				foreach (int[] rot in orientations)
 				{
 					int[][] checks = {
+		 				//<--a-->
 						new int[] {0, 2, 4},
 						new int[] {0, 4, 2},
-						new int[] {2, 4, 0}
-					};
-					btnSquare temp;
-					for (int i = 0; i < checks.Length; ++i)
-					{
-						temp = checkMove(rot, checks[i], true);
-						if (temp != null) return temp;
-					}
-				}
-				//<--b-->
-				foreach (int[] rot in orientations)
-				{
-					int[][] checks = {
+						new int[] {2, 4, 0},
+						//<--b-->
 						new int[] {4, 6, 7},
 						new int[] {4, 7, 6},
-						new int[] {7, 6, 4}
-					};
-					btnSquare temp;
-					for (int i = 0; i < checks.Length; ++i)
-					{
-						temp = checkMove(rot, checks[i], true);
-						if (temp != null) return temp;
-					}
-				}
-				//<--c-->
-				foreach (int[] rot in orientations)
-				{
-					int[][] checks = {
+						new int[] {7, 6, 4},
+						//<--c-->
 						new int[] {0, 1, 3},
 						new int[] {0, 3, 1},
-						new int[] {3, 1, 0}
+						new int[] {3, 1, 0},
+						//<--e-->
+						new int[] {1, 6, 7},
+						new int[] {1, 7, 6},
+						new int[] {6, 7, 1}
 					};
 					btnSquare temp;
 					for (int i = 0; i < checks.Length; ++i)
@@ -356,33 +296,19 @@ namespace TicTacToe
 						return theMove;
 					}
 				}
-				//<--e-->
-				foreach (int[] rot in orientations)
-				{
-					int[][] checks = {
-						new int[] {1, 6, 7},
-						new int[] {1, 7, 6},
-						new int[] {6, 7, 1}
-					};
-					btnSquare temp;
-					for (int i = 0; i < checks.Length; ++i)
-					{
-						temp = checkMove(rot, checks[i], true);
-						if (temp != null) return temp;
-					}
-				}
 				//center
 				if (Button5.Enabled)
 					return Button5;
 				//opposite corner
-				if (Button1.isX() && Button9.Enabled)
-					return Button9;
-				if (Button9.isX() && Button1.Enabled)
-					return Button1;
-				if (Button3.isX() && Button7.Enabled)
-					return Button7;
-				if (Button7.isX() && Button3.Enabled)
-					return Button3;
+				int[][] opposites = { 
+					new int[] {0, 8},
+					new int[] {3, 7}
+				};
+				foreach (int[] inner in opposites)
+				{
+					if (btnArray[inner[0]].isX() && btnArray[inner[1]].Enabled) return btnArray[inner[1]];
+					if (btnArray[inner[1]].isX() && btnArray[inner[0]].Enabled) return btnArray[inner[0]];
+				}
 				//empty corner
 				btnSquare[] corners = {
 					Button1,
