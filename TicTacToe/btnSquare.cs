@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace TicTacToe
 {
@@ -39,6 +35,10 @@ namespace TicTacToe
             return !this.Enabled && !blnIsX;
         }
 
+		/// <summary>
+		/// Purely for the sake of reducing code in computerMove.
+		/// </summary>
+		/// <param name="checkX">Whether or not we're checking for X.</param>
 		public bool autoCheck(bool checkX)
 		{
 			return checkX ? isX() : isO();

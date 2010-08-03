@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace TicTacToe
@@ -73,7 +67,7 @@ namespace TicTacToe
 			The human readable instructions for this strategy
 			are freely available on Wikipedia:
 
-			http://en.wikipedia.org/wiki/Tic_tac_toe#Strategy
+			http://en.wikipedia.org/wiki/Tic-tac-toe#Strategy
 		*/
 
 		/// <summary>
@@ -85,7 +79,7 @@ namespace TicTacToe
 		/// <param name="toChk">The 3-long integer array which tells which two to check, and which to return if successful.</param>
 		/// <param name="isX">Tell the function whether to verify against X (true) or O (false).</param>
 		/// <returns></returns>
-		private btnSquare checkMove(int[] orientation, int[] toChk, bool isX)
+		private btnSquare checkMove(uint[] orientation, uint[] toChk, bool isX)
 		{
 			return (btnArray[orientation[toChk[0]]].autoCheck(isX)
 				 && btnArray[orientation[toChk[1]]].autoCheck(isX)
@@ -102,63 +96,95 @@ namespace TicTacToe
 		private btnSquare ComputerMove()
 		{
 			Random generator = new Random();
-			int[][] orientations = new int[][] {
-				new int[] { // north
+			/*
+				The following is a matrix of all the possible board orientations.
+				The purpose is that we can check a single possibility, and automatically
+			    rotate through the other possibilities instead of typing out 
+			    each and every possibility, which would take forever and would lead to 
+			    unnecessarily complex code.
+			 */
+			uint[][] orientations = new uint[][] {
+				new uint[] { // north
 					0, 1, 2,
 					3, 4, 5,
 					6, 7, 8
 				},
-				new int[] { // northr
+				new uint[] { // northr
 					2, 1, 0,
 					5, 4, 3,
 					8, 7, 6
 				},
-				new int[] { // east
+				new uint[] { // east
 					2, 5, 8,
 					1, 4, 7,
 					0, 3, 6
 				},
-				new int[] { // eastr
+				new uint[] { // eastr
 					8, 5, 2,
 					7, 4, 1,
 					6, 3, 0
 				},
-				new int[] { // west
+				new uint[] { // west
 					6, 3, 0,
 					7, 4, 1,
 					8, 5, 2
 				},
-				new int[] { // westr
+				new uint[] { // westr
 					0, 3, 6,
 					1, 4, 7,
 					2, 5, 8
 				},
-				new int[] { // south
+				new uint[] { // south
 					8, 7, 6,
 					5, 4, 3,
 					2, 1, 0
 				},
-				new int[] { // southr
+				new uint[] { // southr
 					6, 7, 8,
 					3, 4, 5,
 					0, 1, 2 
 				}
 			};
+			// These are the paths along which you can win or lose.
+			uint[][] criticalChecks = {
+				new uint[] {0, 1, 2},
+				/*
+					O O ?
+					_ _ _
+					_ _ _
+				*/
+				new uint[] {0, 2, 1},
+				/*
+					O ? O
+					_ _ _
+					_ _ _
+				*/
+				new uint[] {0, 4, 8},
+				/*
+					O _ _
+					_ O _
+					_ _ ?
+				*/
+				// I excluded 804 / 084, because later on, the 
+				// center would be picked anyway. Similar coding
+				// strategy is used further down as well.
+				new uint[] {3, 4, 5}
+				/*
+					_ _ _
+					O O ?
+					_ _ _
+						 
+				*/
+			};
 			//win
 			if (radHard.Checked || radImp.Checked)
 			{
-				foreach (int[] rot in orientations)
+				foreach (uint[] rot in orientations)
 				{
-					int[][] checks = {
-						new int[] {0, 1, 2},
-						new int[] {0, 2, 1},
-						new int[] {0, 4, 8},
-						new int[] {3, 4, 5}
-					};
 					btnSquare temp;
-					for (int i = 0; i < checks.Length; ++i)
+					for (uint i = 0; i < criticalChecks.Length; ++i)
 					{
-						temp = checkMove(rot, checks[i], false);
+						temp = checkMove(rot, criticalChecks[i], false);
 						if (temp != null) return temp;
 					}
 				}
@@ -166,18 +192,12 @@ namespace TicTacToe
 			//defend
 			if (radNormal.Checked || radHard.Checked || radImp.Checked)
 			{
-				foreach (int[] rot in orientations)
+				foreach (uint[] rot in orientations)
 				{
-					int[][] checks = {
-						new int[] {0, 1, 2},
-						new int[] {0, 2, 1},
-						new int[] {0, 4, 8},
-						new int[] {3, 4, 5}
-					};
 					btnSquare temp;
-					for (int i = 0; i < checks.Length; ++i)
+					for (uint i = 0; i < criticalChecks.Length; ++i)
 					{
-						temp = checkMove(rot, checks[i], true);
+						temp = checkMove(rot, criticalChecks[i], true);
 						if (temp != null) return temp;
 					}
 				}
@@ -188,33 +208,33 @@ namespace TicTacToe
 				//								   FORKING
 				//<-------------------------------------------------------------------------->
 
-				foreach (int[] rot in orientations)
+				foreach (uint[] rot in orientations)
 				{
-					int[][] checks = {
+					uint[][] checks = {
 		 				//<--a-->
-						new int[] {0, 2, 4},
-						new int[] {0, 4, 2},
-						new int[] {2, 4, 0},
+						new uint[] {0, 2, 4},
+						new uint[] {0, 4, 2},
+						new uint[] {2, 4, 0},
 						//<--b-->
-						new int[] {4, 6, 7},
-						new int[] {4, 7, 6},
-						new int[] {7, 6, 4},
+						new uint[] {4, 6, 7},
+						new uint[] {4, 7, 6},
+						new uint[] {7, 6, 4},
 						//<--c-->
-						new int[] {0, 1, 3},
-						new int[] {0, 3, 1},
-						new int[] {3, 1, 0},
+						new uint[] {0, 1, 3},
+						new uint[] {0, 3, 1},
+						new uint[] {3, 1, 0},
 						//<--d-->
-						new int[] {0, 8, 6},
-						new int[] {0, 6, 2},
-						new int[] {0, 2, 6},
-						new int[] {6, 2, 0},
+						new uint[] {0, 8, 6},
+						new uint[] {0, 6, 2},
+						new uint[] {0, 2, 6},
+						new uint[] {6, 2, 0},
 						//<--e-->
-						new int[] {1, 6, 7},
-						new int[] {1, 7, 6},
-						new int[] {6, 7, 1}
+						new uint[] {1, 6, 7},
+						new uint[] {1, 7, 6},
+						new uint[] {6, 7, 1}
 					};
 					btnSquare temp;
-					for (int i = 0; i < checks.Length; ++i)
+					for (uint i = 0; i < checks.Length; ++i)
 					{
 						temp = checkMove(rot, checks[i], false);
 						if (temp != null) return temp;
@@ -224,43 +244,43 @@ namespace TicTacToe
 				//							BLOCK FORKING
 				//<-------------------------------------------------------------------------->
 				//<--f-->
-				foreach (int[] rot in orientations)
+				foreach (uint[] rot in orientations)
 				{
-					int[][] checks = {
-						new int[] {0, 2, 5},
-						new int[] {0, 5, 2},
-						new int[] {5, 2, 0}
+					uint[][] checks = {
+						new uint[] {0, 2, 5},
+						new uint[] {0, 5, 2},
+						new uint[] {5, 2, 0}
 					};
 					btnSquare temp;
-					for (int i = 0; i < checks.Length; ++i)
+					for (uint i = 0; i < checks.Length; ++i)
 					{
 						temp = checkMove(rot, checks[i], true);
 						if (temp != null) return temp;
 					}
 				}
 
-				foreach (int[] rot in orientations)
+				foreach (uint[] rot in orientations)
 				{
-					int[][] checks = {
+					uint[][] checks = {
 		 				//<--a-->
-						new int[] {0, 2, 4},
-						new int[] {0, 4, 2},
-						new int[] {2, 4, 0},
+						new uint[] {0, 2, 4},
+						new uint[] {0, 4, 2},
+						new uint[] {2, 4, 0},
 						//<--b-->
-						new int[] {4, 6, 7},
-						new int[] {4, 7, 6},
-						new int[] {7, 6, 4},
+						new uint[] {4, 6, 7},
+						new uint[] {4, 7, 6},
+						new uint[] {7, 6, 4},
 						//<--c-->
-						new int[] {0, 1, 3},
-						new int[] {0, 3, 1},
-						new int[] {3, 1, 0},
+						new uint[] {0, 1, 3},
+						new uint[] {0, 3, 1},
+						new uint[] {3, 1, 0},
 						//<--e-->
-						new int[] {1, 6, 7},
-						new int[] {1, 7, 6},
-						new int[] {6, 7, 1}
+						new uint[] {1, 6, 7},
+						new uint[] {1, 7, 6},
+						new uint[] {6, 7, 1}
 					};
 					btnSquare temp;
-					for (int i = 0; i < checks.Length; ++i)
+					for (uint i = 0; i < checks.Length; ++i)
 					{
 						temp = checkMove(rot, checks[i], true);
 						if (temp != null) return temp;
@@ -269,7 +289,7 @@ namespace TicTacToe
 				//<--d-->
 				bool defend = false;
 				btnSquare badbut = default(btnSquare);
-				foreach (int[] rot in orientations)
+				foreach (uint[] rot in orientations)
 				{
 					if (btnArray[rot[0]].isX() && btnArray[rot[6]].isX() && (btnArray[rot[2]].Enabled || btnArray[rot[8]].Enabled))
 					{
@@ -300,11 +320,11 @@ namespace TicTacToe
 				if (Button5.Enabled)
 					return Button5;
 				//opposite corner
-				int[][] opposites = { 
-					new int[] {0, 8},
-					new int[] {3, 7}
+				uint[][] opposites = { 
+					new uint[] {0, 8},
+					new uint[] {3, 7}
 				};
-				foreach (int[] inner in opposites)
+				foreach (uint[] inner in opposites)
 				{
 					if (btnArray[inner[0]].isX() && btnArray[inner[1]].Enabled) return btnArray[inner[1]];
 					if (btnArray[inner[1]].isX() && btnArray[inner[0]].Enabled) return btnArray[inner[0]];
