@@ -40,12 +40,14 @@
 			this.radComp = new System.Windows.Forms.RadioButton();
 			this.btnNewGame = new System.Windows.Forms.Button();
 			this.lblWhoseTurn = new System.Windows.Forms.Label();
+			this.pnlGameBoard = new System.Windows.Forms.TableLayoutPanel();
 			this.grpDifficulty.SuspendLayout();
 			this.grpMode.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// lblNoTurns
 			// 
+			this.lblNoTurns.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.lblNoTurns.Location = new System.Drawing.Point(12, 251);
 			this.lblNoTurns.Name = "lblNoTurns";
 			this.lblNoTurns.Size = new System.Drawing.Size(195, 28);
@@ -114,7 +116,7 @@
 			// 
 			// btnExit
 			// 
-			this.btnExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnExit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
 			this.btnExit.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
 			this.btnExit.Location = new System.Drawing.Point(290, 279);
@@ -161,12 +163,12 @@
 			// 
 			// btnNewGame
 			// 
-			this.btnNewGame.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnNewGame.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnNewGame.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
 			this.btnNewGame.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btnNewGame.Location = new System.Drawing.Point(287, 238);
+			this.btnNewGame.Location = new System.Drawing.Point(290, 238);
 			this.btnNewGame.Name = "btnNewGame";
-			this.btnNewGame.Size = new System.Drawing.Size(138, 35);
+			this.btnNewGame.Size = new System.Drawing.Size(134, 35);
 			this.btnNewGame.TabIndex = 28;
 			this.btnNewGame.Text = "New Game";
 			this.btnNewGame.UseVisualStyleBackColor = false;
@@ -185,17 +187,38 @@
 			this.lblWhoseTurn.Text = "X";
 			this.lblWhoseTurn.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
+			// pnlGameBoard
+			// 
+			this.pnlGameBoard.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.pnlGameBoard.ColumnCount = 3;
+			this.pnlGameBoard.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+			this.pnlGameBoard.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33331F));
+			this.pnlGameBoard.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+			this.pnlGameBoard.Location = new System.Drawing.Point(12, 12);
+			this.pnlGameBoard.MinimumSize = new System.Drawing.Size(210, 210);
+			this.pnlGameBoard.Name = "pnlGameBoard";
+			this.pnlGameBoard.RowCount = 3;
+			this.pnlGameBoard.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+			this.pnlGameBoard.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+			this.pnlGameBoard.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+			this.pnlGameBoard.Size = new System.Drawing.Size(210, 210);
+			this.pnlGameBoard.TabIndex = 33;
+			// 
 			// frmMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(436, 322);
+			this.Controls.Add(this.pnlGameBoard);
 			this.Controls.Add(this.lblNoTurns);
 			this.Controls.Add(this.grpDifficulty);
 			this.Controls.Add(this.btnExit);
 			this.Controls.Add(this.grpMode);
 			this.Controls.Add(this.btnNewGame);
 			this.Controls.Add(this.lblWhoseTurn);
+			this.MinimumSize = new System.Drawing.Size(452, 360);
 			this.Name = "frmMain";
 			this.Text = "Tic Tac Toe";
 			this.grpDifficulty.ResumeLayout(false);
@@ -220,6 +243,7 @@
 		internal System.Windows.Forms.RadioButton radComp;
 		internal System.Windows.Forms.Button btnNewGame;
 		internal System.Windows.Forms.Label lblWhoseTurn;
+		private System.Windows.Forms.TableLayoutPanel pnlGameBoard;
 	}
 }
 
