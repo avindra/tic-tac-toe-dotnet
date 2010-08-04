@@ -6,10 +6,11 @@ namespace TicTacToe
 	public partial class frmMain : Form
 	{
 		/// <summary>
-		/// An array for storing the 9 squares
-		/// in this game.
+		/// The board object defined by Board.cs. Contains
+		/// utilities for easily manipulating and representing
+		/// the game board.
 		/// </summary>
-		btnSquare[] btnArray;
+		Board gameBoard;
 
 		/// <summary>
 		/// The count of the amount of turns. Should be reset every game.
@@ -21,7 +22,7 @@ namespace TicTacToe
 		public frmMain()
 		{
 			InitializeComponent();
-			btnArray = new btnSquare[9];
+			btnSquare[] btnArray = new btnSquare[9];
 			btnSquare temp;
 			for (uint i = 0; i < 9; ++i)
 			{
@@ -29,6 +30,7 @@ namespace TicTacToe
 				temp.Click += new System.EventHandler(this.makeMove);
 				this.pnlGameBoard.Controls.Add(temp);
 			}
+			gameBoard = new Board(btnArray);
 		}
 
 		#region Minor Event Handlers
@@ -88,17 +90,17 @@ namespace TicTacToe
 		/// checking the moves from a single function, instead
 		/// of just repeating a lot of code.
 		/// </summary>
-		/// <param name="orientation">The current orientation that needs to be checked.</param>
-		/// <param name="toChk">The 3-long integer array which tells which two to check, and which to return if successful.</param>
+		/// <param name="toCheck">The 3-long integer array which tells which two to check, and which to return if successful.</param>
 		/// <param name="isX">Tell the function whether to verify against X (true) or O (false).</param>
 		/// <returns></returns>
-		private btnSquare checkMove(uint[] orientation, uint[] toChk, bool isX)
+		private btnSquare checkMove(uint[] toCheck, bool isX)
 		{
-			return (btnArray[orientation[toChk[0]]].autoCheck(isX)
-				 && btnArray[orientation[toChk[1]]].autoCheck(isX)
-				 && btnArray[orientation[toChk[2]]].Enabled) 
-				 
-				 ? btnArray[orientation[toChk[2]]]
+
+			return (gameBoard.get(toCheck[0]).autoCheck(isX)
+				 && gameBoard.get(toCheck[1]).autoCheck(isX)
+				 && gameBoard.get(toCheck[2]).Enabled)
+
+				 ? gameBoard.get(toCheck[2])
 				 : null;
 		}
 
@@ -110,55 +112,6 @@ namespace TicTacToe
 		private btnSquare ComputerMove()
 		{
 			Random generator = new Random();
-			/*
-				The following is a matrix of all the possible board orientations.
-				The purpose is that we can check a single possibility, and automatically
-			    rotate through the other possibilities instead of typing out 
-			    each and every possibility, which would take forever and would lead to 
-			    unnecessarily complex code.
-			 */
-			uint[][] orientations = {
-				new uint[] { // north
-					0, 1, 2,
-					3, 4, 5,
-					6, 7, 8
-				},
-				new uint[] { // northr
-					2, 1, 0,
-					5, 4, 3,
-					8, 7, 6
-				},
-				new uint[] { // east
-					2, 5, 8,
-					1, 4, 7,
-					0, 3, 6
-				},
-				new uint[] { // eastr
-					8, 5, 2,
-					7, 4, 1,
-					6, 3, 0
-				},
-				new uint[] { // west
-					6, 3, 0,
-					7, 4, 1,
-					8, 5, 2
-				},
-				new uint[] { // westr
-					0, 3, 6,
-					1, 4, 7,
-					2, 5, 8
-				},
-				new uint[] { // south
-					8, 7, 6,
-					5, 4, 3,
-					2, 1, 0
-				},
-				new uint[] { // southr
-					6, 7, 8,
-					3, 4, 5,
-					0, 1, 2 
-				}
-			};
 			// These are the paths along which you can win or lose.
 			uint[][] criticalChecks = {
 				new uint[] {0, 1, 2},
@@ -193,12 +146,12 @@ namespace TicTacToe
 			//win
 			if (radHard.Checked || radImp.Checked || (radNormal.Checked && generator.Next(0, 2) >= 1))
 			{
-				foreach (uint[] rot in orientations)
+				while (!gameBoard.rotate())
 				{
 					btnSquare temp;
 					for (uint i = 0; i < criticalChecks.Length; ++i)
 					{
-						temp = checkMove(rot, criticalChecks[i], false);
+						temp = checkMove(criticalChecks[i], false);
 						if (temp != null) return temp;
 					}
 				}
@@ -206,12 +159,12 @@ namespace TicTacToe
 			//defend
 			if (radHard.Checked || radImp.Checked || radNormal.Checked)
 			{
-				foreach (uint[] rot in orientations)
+				while(!gameBoard.rotate())
 				{
 					btnSquare temp;
 					for (uint i = 0; i < criticalChecks.Length; ++i)
 					{
-						temp = checkMove(rot, criticalChecks[i], true);
+						temp = checkMove(criticalChecks[i], true);
 						if (temp != null) return temp;
 					}
 				}
@@ -222,7 +175,7 @@ namespace TicTacToe
 				//								   FORKING
 				//<-------------------------------------------------------------------------->
 
-				foreach (uint[] rot in orientations)
+				while(!gameBoard.rotate())
 				{
 					uint[][] checks = {
 		 				//<--a-->
@@ -250,7 +203,7 @@ namespace TicTacToe
 					btnSquare temp;
 					for (uint i = 0; i < checks.Length; ++i)
 					{
-						temp = checkMove(rot, checks[i], false);
+						temp = checkMove(checks[i], false);
 						if (temp != null) return temp;
 					}
 				}
@@ -258,7 +211,7 @@ namespace TicTacToe
 				//							BLOCK FORKING
 				//<-------------------------------------------------------------------------->
 
-				foreach (uint[] rot in orientations)
+				while(!gameBoard.rotate())
 				{
 					uint[][] checks = {
 						//<--f-->
@@ -285,43 +238,44 @@ namespace TicTacToe
 					btnSquare temp;
 					for (uint i = 0; i < checks.Length; ++i)
 					{
-						temp = checkMove(rot, checks[i], true);
+						temp = checkMove(checks[i], true);
 						if (temp != null) return temp;
 					}
 				}
 				//<--d-->
 				bool defend = false;
 				btnSquare badbut = default(btnSquare);
-				foreach (uint[] rot in orientations)
+				while(!gameBoard.rotate())
 				{
-					if (btnArray[rot[0]].isX() && btnArray[rot[6]].isX() && (btnArray[rot[2]].Enabled || btnArray[rot[8]].Enabled))
+					//TODO: Optimize this section... definitely could use a fixup.
+					if (gameBoard.get(0).isX() && gameBoard.get(6).isX() && (gameBoard.get(2).Enabled || gameBoard.get(8).Enabled))
 					{
 						defend = true;
-						badbut = btnArray[rot[2]];
+						badbut = gameBoard.get(2);
 					}
-					if (btnArray[rot[0]].isX() && btnArray[rot[2]].isX() && (btnArray[rot[6]].Enabled || btnArray[rot[8]].Enabled))
+					if (gameBoard.get(0).isX() && gameBoard.get(2).isX() && (gameBoard.get(6).Enabled || gameBoard.get(8).Enabled))
 					{
 						defend = true;
-						badbut = btnArray[rot[6]];
+						badbut = gameBoard.get(6);
 					}
-					if (btnArray[rot[6]].isX() && btnArray[rot[2]].isX() && (btnArray[rot[0]].Enabled || btnArray[rot[8]].Enabled))
+					if (gameBoard.get(6).isX() && gameBoard.get(2).isX() && (gameBoard.get(0).Enabled || gameBoard.get(8).Enabled))
 					{
 						defend = true;
-						badbut = btnArray[rot[0]];
+						badbut = gameBoard.get(0);
 					}
 					if (defend)
 					{
-						btnSquare theMove = btnArray[0];
-						while (!theMove.Enabled || object.ReferenceEquals(theMove, badbut) || object.ReferenceEquals(theMove, rot[8]))
+						btnSquare theMove = gameBoard.get(0);
+						while (!theMove.Enabled || object.ReferenceEquals(theMove, badbut) || object.ReferenceEquals(theMove, gameBoard.get(8)))
 						{
-							theMove = btnArray[generator.Next(1, 8)];
+							theMove = gameBoard.get((uint) generator.Next(1, 8));
 						}
 						return theMove;
 					}
 				}
 				//center
-				if (btnArray[4].Enabled)
-					return btnArray[4];
+				if (gameBoard.get(4).Enabled)
+					return gameBoard.get(4);
 				//opposite corner
 				uint[][] opposites = {
 					new uint[] {0, 8},
@@ -329,37 +283,37 @@ namespace TicTacToe
 				};
 				foreach (uint[] inner in opposites)
 				{
-					if (btnArray[inner[0]].isX() && btnArray[inner[1]].Enabled) return btnArray[inner[1]];
-					if (btnArray[inner[1]].isX() && btnArray[inner[0]].Enabled) return btnArray[inner[0]];
+					if (gameBoard.get(inner[0]).isX() && gameBoard.get(inner[1]).Enabled) return gameBoard.get(inner[1]);
+					if (gameBoard.get(inner[1]).isX() && gameBoard.get(inner[0]).Enabled) return gameBoard.get(inner[0]);
 				}
 				//empty corner
-				int[] corners = {
+				uint[] corners = {
 					0, 2, 6, 8
 				};
-				btnSquare cornPlay = btnArray[corners[generator.Next(0, 3)]];
+				btnSquare cornPlay = gameBoard.get(corners[generator.Next(0, 3)]);
 				while (!cornPlay.Enabled)
 				{
-					cornPlay = btnArray[corners[generator.Next(0, 3)]];
+					cornPlay = gameBoard.get(corners[generator.Next(0, 3)]);
 				}
 				if (cornPlay.Enabled) return cornPlay;
 				//empty side
-				int[] sides = {
+				uint[] sides = {
 					1, 3, 5, 7
 				};
-				btnSquare sidePlay = btnArray[sides[generator.Next(0, 3)]];
+				btnSquare sidePlay = gameBoard.get(sides[generator.Next(0, 3)]);
 				while (!sidePlay.Enabled)
 				{
-					sidePlay = btnArray[sides[generator.Next(0, 3)]];
+					sidePlay = gameBoard.get(sides[generator.Next(0, 3)]);
 				}
 				return sidePlay;
 			}
 
 			// randomly play a remaining square
 			// Theoretically, the code will never reach here.
-			btnSquare compMove = btnArray[generator.Next(0, 8)];
+			btnSquare compMove = gameBoard.get((uint) generator.Next(0, 8));
 			while (!compMove.Enabled)
 			{
-				compMove = btnArray[generator.Next(0, 8)];
+				compMove = gameBoard.get((uint) generator.Next(0, 8));
 			}
 			return compMove;
 		}
@@ -393,7 +347,7 @@ namespace TicTacToe
 				uint xCount = 0, oCount = 0;
 				for (uint i = 0; i < 3; ++i)
 				{
-					btnSquare temp = btnArray[path[i]];
+					btnSquare temp = gameBoard.get(path[i]);
 					if (temp.isX())
 					{
 						if (++xCount == 3)
@@ -421,10 +375,13 @@ namespace TicTacToe
 				return true;
 			}
 			bool blnDraw = true;
-			foreach (btnSquare gamebutton in btnArray)
+			for (uint i = 0; i < 9; ++i)
 			{
-				if (gamebutton.Enabled)
+				if (gameBoard.get(i).Enabled)
+				{
 					blnDraw = false;
+					break;
+				}
 			}
 			if (blnDraw)
 			{
@@ -453,8 +410,8 @@ namespace TicTacToe
 		private void resetGame()
 		{
 			turns = 0;
-			for (int i = 8; i >= 0; --i)
-				btnArray[i].unset();
+			for (uint i = 0; i < 9; ++i)
+				gameBoard.get(i).unset();
 			lblWhoseTurn.Text = "X";
 			lblNoTurns.Text = "";
 			blnComp = true;
