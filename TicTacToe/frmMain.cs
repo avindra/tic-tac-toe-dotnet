@@ -31,6 +31,9 @@ namespace TicTacToe
 				this.pnlGameBoard.Controls.Add(temp);
 			}
 			gameBoard = new Board(btnArray);
+#if DEBUG
+			this.Text += " (debug mode)";
+#endif
 		}
 
 		#region Minor Event Handlers
@@ -68,16 +71,6 @@ namespace TicTacToe
 			{
 				blnComp = false;
 				makeMove(ComputerMove(), e);
-				// Board may be left out of position by the clumsy computer, so
-				// reposition it. When makeMove is called, we need to have faith that
-				// the current position is the standard one. If you don't believe me
-				// or have trouble understanding, erase the reorient() call and try playing
-				// the following moves: 4, 6, 8, 7.
-				//
-				// As you can see, the computer would fail to win across 0 2 1, because
-				// it's orientations are all out of whack.
-				// Instead of winning immediately, it lets the game become a draw.
-				gameBoard.reorient();
 			}
 			else
 			{
@@ -100,18 +93,30 @@ namespace TicTacToe
 		/// checking the moves from a single function, instead
 		/// of just repeating a lot of code.
 		/// </summary>
-		/// <param name="toCheck">The 3-long integer array which tells which two to check, and which to return if successful.</param>
+		/// <param name="checks">The array of checks.</param>
 		/// <param name="isX">Tell the function whether to verify against X (true) or O (false).</param>
 		/// <returns></returns>
-		private btnSquare checkMove(uint[] toCheck, bool isX)
+		private btnSquare checkMoves(uint[][] checks, bool isX)
 		{
+			do
+			{
+				btnSquare temp;
+				for (uint i = 0; i < checks.Length; ++i)
+				{
+					temp = (gameBoard.get(checks[i][0]).autoCheck(isX)
+						 && gameBoard.get(checks[i][1]).autoCheck(isX)
+						 && gameBoard.get(checks[i][2]).Enabled)
 
-			return (gameBoard.get(toCheck[0]).autoCheck(isX)
-				 && gameBoard.get(toCheck[1]).autoCheck(isX)
-				 && gameBoard.get(toCheck[2]).Enabled)
-
-				 ? gameBoard.get(toCheck[2])
-				 : null;
+						 ? gameBoard.get(checks[i][2])
+						 : null;
+					if (temp != null)
+					{
+						gameBoard.reorient();
+						return temp;
+					}
+				}
+			} while (gameBoard.rotate());
+			return null;
 		}
 
 		#region Computer Decision Making
@@ -153,105 +158,74 @@ namespace TicTacToe
 						 
 				*/
 			};
+			// for storing button choice calculations
+			btnSquare temp;
+
 			//win
 			if (radHard.Checked || radImp.Checked || (radNormal.Checked && generator.Next(0, 2) >= 1))
 			{
-				do
-				{
-					btnSquare temp;
-					for (uint i = 0; i < criticalChecks.Length; ++i)
-					{
-						temp = checkMove(criticalChecks[i], false);
-						if (temp != null) return temp;
-					}
-				} while (!gameBoard.rotate());
+				if ((temp = checkMoves(criticalChecks, false)) != null) return temp;
 			}
 			//defend
 			if (radHard.Checked || radImp.Checked || radNormal.Checked)
 			{
-				do
-				{
-					btnSquare temp;
-					for (uint i = 0; i < criticalChecks.Length; ++i)
-					{
-						temp = checkMove(criticalChecks[i], true);
-						if (temp != null) return temp;
-					}
-				} while (!gameBoard.rotate());
+				if ((temp = checkMoves(criticalChecks, true)) != null) return temp;
 			}
 			if (radImp.Checked)
 			{
 				//<-------------------------------------------------------------------------->
 				//								   FORKING
 				//<-------------------------------------------------------------------------->
-
-				do
-				{
-					uint[][] checks = {
-		 				//<--a-->
-						new uint[] {0, 2, 4},
-						new uint[] {0, 4, 2},
-						new uint[] {2, 4, 0},
-						//<--b-->
-						new uint[] {4, 6, 7},
-						new uint[] {4, 7, 6},
-						new uint[] {7, 6, 4},
-						//<--c-->
-						new uint[] {0, 1, 3},
-						new uint[] {0, 3, 1},
-						new uint[] {3, 1, 0},
-						//<--d-->
-						new uint[] {0, 8, 6},
-						new uint[] {0, 6, 2},
-						new uint[] {0, 2, 6},
-						new uint[] {6, 2, 0},
-						//<--e-->
-						new uint[] {1, 6, 7},
-						new uint[] {1, 7, 6},
-						new uint[] {6, 7, 1}
-					};
-					btnSquare temp;
-					for (uint i = 0; i < checks.Length; ++i)
-					{
-						temp = checkMove(checks[i], false);
-						if (temp != null) return temp;
-					}
-				} while (!gameBoard.rotate());
+				temp = checkMoves(new uint[][] {
+		 			//<--a-->
+					new uint[] {0, 2, 4},
+					new uint[] {0, 4, 2},
+					new uint[] {2, 4, 0},
+					//<--b-->
+					new uint[] {4, 6, 7},
+					new uint[] {4, 7, 6},
+					new uint[] {7, 6, 4},
+					//<--c-->
+					new uint[] {0, 1, 3},
+					new uint[] {0, 3, 1},
+					new uint[] {3, 1, 0},
+					//<--d-->
+					new uint[] {0, 8, 6},
+					new uint[] {0, 6, 2},
+					new uint[] {0, 2, 6},
+					new uint[] {6, 2, 0},
+					//<--e-->
+					new uint[] {1, 6, 7},
+					new uint[] {1, 7, 6},
+					new uint[] {6, 7, 1}
+				}, false);
+				if (temp != null) return temp;
 				//<-------------------------------------------------------------------------->
 				//							BLOCK FORKING
 				//<-------------------------------------------------------------------------->
-
-				do
-				{
-					uint[][] checks = {
-						//<--f-->
-						new uint[] {0, 2, 5},
-						new uint[] {0, 5, 2},
-						new uint[] {5, 2, 0},
-		 				//<--a-->
-						new uint[] {0, 2, 4},
-						new uint[] {0, 4, 2},
-						new uint[] {2, 4, 0},
-						//<--b-->
-						new uint[] {4, 6, 7},
-						new uint[] {4, 7, 6},
-						new uint[] {7, 6, 4},
-						//<--c-->
-						new uint[] {0, 1, 3},
-						new uint[] {0, 3, 1},
-						new uint[] {3, 1, 0},
-						//<--e-->
-						new uint[] {1, 6, 7},
-						new uint[] {1, 7, 6},
-						new uint[] {6, 7, 1}
-					};
-					btnSquare temp;
-					for (uint i = 0; i < checks.Length; ++i)
-					{
-						temp = checkMove(checks[i], true);
-						if (temp != null) return temp;
-					}
-				} while (!gameBoard.rotate());
+				temp = checkMoves(new uint[][] {
+					//<--f-->
+					new uint[] {0, 2, 5},
+					new uint[] {0, 5, 2},
+					new uint[] {5, 2, 0},
+		 			//<--a-->
+					new uint[] {0, 2, 4},
+					new uint[] {0, 4, 2},
+					new uint[] {2, 4, 0},
+					//<--b-->
+					new uint[] {4, 6, 7},
+					new uint[] {4, 7, 6},
+					new uint[] {7, 6, 4},
+					//<--c-->
+					new uint[] {0, 1, 3},
+					new uint[] {0, 3, 1},
+					new uint[] {3, 1, 0},
+					//<--e-->
+					new uint[] {1, 6, 7},
+					new uint[] {1, 7, 6},
+					new uint[] {6, 7, 1}
+				}, true);
+				if (temp != null) return temp;
 				//<--d-->
 				bool defend = false;
 				btnSquare badbut = default(btnSquare);
@@ -279,7 +253,7 @@ namespace TicTacToe
 						}
 						return theMove;
 					}
-				} while (!gameBoard.rotate());
+				} while (gameBoard.rotate());
 				//center
 				if (gameBoard.get(4).Enabled)
 					return gameBoard.get(4);
