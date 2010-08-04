@@ -137,23 +137,23 @@
 			this.grpMode.Size = new System.Drawing.Size(166, 61);
 			this.grpMode.TabIndex = 29;
 			this.grpMode.TabStop = false;
-			this.grpMode.Text = "Game Mode";
+			this.grpMode.Text = "Opponent";
 			// 
 			// rad2P
 			// 
 			this.rad2P.AutoSize = true;
 			this.rad2P.Location = new System.Drawing.Point(12, 39);
 			this.rad2P.Name = "rad2P";
-			this.rad2P.Size = new System.Drawing.Size(63, 17);
+			this.rad2P.Size = new System.Drawing.Size(70, 17);
 			this.rad2P.TabIndex = 12;
-			this.rad2P.Text = "2 Player";
+			this.rad2P.Text = "Human";
 			this.rad2P.UseVisualStyleBackColor = true;
 			// 
 			// radComp
 			// 
 			this.radComp.AutoSize = true;
 			this.radComp.Checked = true;
-			this.radComp.Location = new System.Drawing.Point(11, 17);
+			this.radComp.Location = new System.Drawing.Point(12, 17);
 			this.radComp.Name = "radComp";
 			this.radComp.Size = new System.Drawing.Size(70, 17);
 			this.radComp.TabIndex = 11;

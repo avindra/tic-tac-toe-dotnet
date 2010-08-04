@@ -25,6 +25,7 @@ namespace TicTacToe
 		/// </summary>
 		public btnSquare()
 		{
+			this.Dock = DockStyle.Fill;
 			this.Size = new System.Drawing.Size(65, 70);
 			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
 			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold);

@@ -23,12 +23,9 @@ namespace TicTacToe
 			InitializeComponent();
 			btnArray = new btnSquare[9];
 			btnSquare temp;
-			int lastTabIndex = 18;
 			for (uint i = 0; i < 9; ++i)
 			{
 				temp = btnArray[i] = new btnSquare();
-				temp.TabIndex = lastTabIndex++;
-				temp.Dock = DockStyle.Fill;
 				temp.Click += new System.EventHandler(this.makeMove);
 				this.pnlGameBoard.Controls.Add(temp);
 			}
@@ -459,6 +456,7 @@ namespace TicTacToe
 			for (int i = 8; i >= 0; --i)
 				btnArray[i].unset();
 			lblWhoseTurn.Text = "X";
+			lblNoTurns.Text = "";
 			blnComp = true;
 		}
 	}
