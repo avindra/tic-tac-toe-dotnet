@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace TicTacToe
+﻿namespace TicTacToe
 {
 	class Board
 	{
@@ -21,7 +16,7 @@ namespace TicTacToe
 		///	each and every possibility, which would take forever and would lead to 
 		///	unnecessarily complex code.
 		/// </summary>
-		private static uint[][] orientations = {
+		private static readonly uint[][] orientations = {
 			new uint[] { // north (standard orientation)
 				0, 1, 2,
 				3, 4, 5,

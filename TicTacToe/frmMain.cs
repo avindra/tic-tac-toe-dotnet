@@ -146,7 +146,7 @@ namespace TicTacToe
 			//win
 			if (radHard.Checked || radImp.Checked || (radNormal.Checked && generator.Next(0, 2) >= 1))
 			{
-				while (!gameBoard.rotate())
+				do
 				{
 					btnSquare temp;
 					for (uint i = 0; i < criticalChecks.Length; ++i)
@@ -154,12 +154,12 @@ namespace TicTacToe
 						temp = checkMove(criticalChecks[i], false);
 						if (temp != null) return temp;
 					}
-				}
+				} while (!gameBoard.rotate());
 			}
 			//defend
 			if (radHard.Checked || radImp.Checked || radNormal.Checked)
 			{
-				while(!gameBoard.rotate())
+				do
 				{
 					btnSquare temp;
 					for (uint i = 0; i < criticalChecks.Length; ++i)
@@ -167,7 +167,7 @@ namespace TicTacToe
 						temp = checkMove(criticalChecks[i], true);
 						if (temp != null) return temp;
 					}
-				}
+				} while (!gameBoard.rotate());
 			}
 			if (radImp.Checked)
 			{
@@ -175,7 +175,7 @@ namespace TicTacToe
 				//								   FORKING
 				//<-------------------------------------------------------------------------->
 
-				while(!gameBoard.rotate())
+				do
 				{
 					uint[][] checks = {
 		 				//<--a-->
@@ -206,12 +206,12 @@ namespace TicTacToe
 						temp = checkMove(checks[i], false);
 						if (temp != null) return temp;
 					}
-				}
+				} while (!gameBoard.rotate());
 				//<-------------------------------------------------------------------------->
 				//							BLOCK FORKING
 				//<-------------------------------------------------------------------------->
 
-				while(!gameBoard.rotate())
+				do
 				{
 					uint[][] checks = {
 						//<--f-->
@@ -241,38 +241,35 @@ namespace TicTacToe
 						temp = checkMove(checks[i], true);
 						if (temp != null) return temp;
 					}
-				}
+				} while (!gameBoard.rotate());
 				//<--d-->
 				bool defend = false;
 				btnSquare badbut = default(btnSquare);
-				while(!gameBoard.rotate())
+				do
 				{
-					//TODO: Optimize this section... definitely could use a fixup.
-					if (gameBoard.get(0).isX() && gameBoard.get(6).isX() && (gameBoard.get(2).Enabled || gameBoard.get(8).Enabled))
+					uint[][] tests = {
+						new uint[] {0, 6, 2},
+		 				new uint[] {0, 2, 6},
+						new uint[] {6, 2, 0}
+					};
+					foreach (uint[] innerTest in tests)
 					{
-						defend = true;
-						badbut = gameBoard.get(2);
-					}
-					if (gameBoard.get(0).isX() && gameBoard.get(2).isX() && (gameBoard.get(6).Enabled || gameBoard.get(8).Enabled))
-					{
-						defend = true;
-						badbut = gameBoard.get(6);
-					}
-					if (gameBoard.get(6).isX() && gameBoard.get(2).isX() && (gameBoard.get(0).Enabled || gameBoard.get(8).Enabled))
-					{
-						defend = true;
-						badbut = gameBoard.get(0);
+						if (gameBoard.get(innerTest[0]).isX() && gameBoard.get(innerTest[1]).isX() && (gameBoard.get(innerTest[2]).Enabled || gameBoard.get(8).Enabled))
+						{
+							defend = true;
+							badbut = gameBoard.get(innerTest[2]);
+						}
 					}
 					if (defend)
 					{
 						btnSquare theMove = gameBoard.get(0);
 						while (!theMove.Enabled || object.ReferenceEquals(theMove, badbut) || object.ReferenceEquals(theMove, gameBoard.get(8)))
 						{
-							theMove = gameBoard.get((uint) generator.Next(1, 8));
+							theMove = gameBoard.get((uint)generator.Next(1, 8));
 						}
 						return theMove;
 					}
-				}
+				} while (!gameBoard.rotate());
 				//center
 				if (gameBoard.get(4).Enabled)
 					return gameBoard.get(4);
