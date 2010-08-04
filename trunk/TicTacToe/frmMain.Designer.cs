@@ -40,15 +40,6 @@
 			this.radComp = new System.Windows.Forms.RadioButton();
 			this.btnNewGame = new System.Windows.Forms.Button();
 			this.lblTurn = new System.Windows.Forms.Label();
-			this.Button9 = new btnSquare();
-			this.Button8 = new btnSquare();
-			this.Button7 = new btnSquare();
-			this.Button6 = new btnSquare();
-			this.Button5 = new btnSquare();
-			this.Button4 = new btnSquare();
-			this.Button3 = new btnSquare();
-			this.Button2 = new btnSquare();
-			this.Button1 = new btnSquare();
 			this.GroupBox1.SuspendLayout();
 			this.grpMode.SuspendLayout();
 			this.SuspendLayout();
@@ -194,60 +185,6 @@
 			this.lblTurn.Text = "X";
 			this.lblTurn.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			//
-			// Button9
-			//
-			this.Button9.Location = new System.Drawing.Point(149, 158);
-			this.Button9.Name = "Button9";
-			this.Button9.TabIndex = 26;
-			//
-			// Button8
-			//
-			this.Button8.Location = new System.Drawing.Point(78, 158);
-			this.Button8.Name = "Button8";
-			this.Button8.TabIndex = 25;
-			//
-			// Button7
-			//
-			this.Button7.Location = new System.Drawing.Point(7, 158);
-			this.Button7.Name = "Button7";
-			this.Button7.TabIndex = 24;
-			//
-			// Button6
-			//
-			this.Button6.Location = new System.Drawing.Point(149, 82);
-			this.Button6.Name = "Button6";
-			this.Button6.TabIndex = 23;
-			//
-			// Button5
-			//
-			this.Button5.Location = new System.Drawing.Point(78, 82);
-			this.Button5.Name = "Button5";
-			this.Button5.TabIndex = 22;
-			//
-			// Button4
-			//
-			this.Button4.Location = new System.Drawing.Point(7, 82);
-			this.Button4.Name = "Button4";
-			this.Button4.TabIndex = 21;
-			//
-			// Button3
-			//
-			this.Button3.Location = new System.Drawing.Point(149, 6);
-			this.Button3.Name = "Button3";
-			this.Button3.TabIndex = 20;
-			//
-			// Button2
-			//
-			this.Button2.Location = new System.Drawing.Point(78, 6);
-			this.Button2.Name = "Button2";
-			this.Button2.TabIndex = 19;
-			//
-			// Button1
-			//
-			this.Button1.Location = new System.Drawing.Point(7, 6);
-			this.Button1.Name = "Button1";
-			this.Button1.TabIndex = 18;
-			//
 			// frmMain
 			//
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -259,15 +196,6 @@
 			this.Controls.Add(this.grpMode);
 			this.Controls.Add(this.btnNewGame);
 			this.Controls.Add(this.lblTurn);
-			this.Controls.Add(this.Button9);
-			this.Controls.Add(this.Button8);
-			this.Controls.Add(this.Button7);
-			this.Controls.Add(this.Button6);
-			this.Controls.Add(this.Button5);
-			this.Controls.Add(this.Button4);
-			this.Controls.Add(this.Button3);
-			this.Controls.Add(this.Button2);
-			this.Controls.Add(this.Button1);
 			this.Name = "frmMain";
 			this.Text = "Tic Tac Toe";
 			this.GroupBox1.ResumeLayout(false);
@@ -292,15 +220,6 @@
 		internal System.Windows.Forms.RadioButton radComp;
 		internal System.Windows.Forms.Button btnNewGame;
 		internal System.Windows.Forms.Label lblTurn;
-		internal TicTacToe.btnSquare Button9;
-		internal TicTacToe.btnSquare Button8;
-		internal TicTacToe.btnSquare Button7;
-		internal TicTacToe.btnSquare Button6;
-		internal TicTacToe.btnSquare Button5;
-		internal TicTacToe.btnSquare Button4;
-		internal TicTacToe.btnSquare Button3;
-		internal TicTacToe.btnSquare Button2;
-		internal TicTacToe.btnSquare Button1;
 	}
 }
 
