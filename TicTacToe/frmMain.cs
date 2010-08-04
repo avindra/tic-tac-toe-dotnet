@@ -23,23 +23,14 @@ namespace TicTacToe
 			InitializeComponent();
 			btnArray = new btnSquare[9];
 			btnSquare temp;
-			int lastTabIndex = 18, currentX = 7, spaceX = 70, currentY = -70, spaceY = 76;
+			int lastTabIndex = 18;
 			for (uint i = 0; i < 9; ++i)
 			{
-				if (i % 3 == 0)
-				{
-					currentX = 7;
-					currentY += spaceY;
-				}
-				else
-				{
-					currentX += spaceX;
-				}
 				temp = btnArray[i] = new btnSquare();
 				temp.TabIndex = lastTabIndex++;
-				temp.Location = new System.Drawing.Point(currentX, currentY);
+				temp.Dock = DockStyle.Fill;
 				temp.Click += new System.EventHandler(this.makeMove);
-				this.Controls.Add(temp);
+				this.pnlGameBoard.Controls.Add(temp);
 			}
 		}
 
