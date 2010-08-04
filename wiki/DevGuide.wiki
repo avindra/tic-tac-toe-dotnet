@@ -16,7 +16,7 @@ You need Visual Studio. I use Visual Studio 2010, as it's the latest version and
  # Select "Release" from the Solution Configurations, and "x86" from Solution Platforms. You can choose x64 if you want, but there really is no practical need.
  # Right click on the solution, and choose "Build Solution", or just press Ctrl + Shift + B.
   * The build directory is "\TicTacToe\bin\Release\", then "x86" or "x64" depending on which platform you chose.
- # Now you can execute the file. Note there is a PDB file, as well as a vshost.exe file. You can ignore these, these are files generated that contain locations to the source code in case of an error. The program can run just with "TicTacToe.exe".
+ # Now you can execute the file. Note there is are vshost files. You can ignore these, these are files used by Visual Studio. The program can run just with "TicTacToe.exe".
 
 == Commit your changes ==
 
