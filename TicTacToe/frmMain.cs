@@ -68,6 +68,16 @@ namespace TicTacToe
 			{
 				blnComp = false;
 				makeMove(ComputerMove(), e);
+				// Board may be left out of position by the clumsy computer, so
+				// reposition it. When makeMove is called, we need to have faith that
+				// the current position is the standard one. If you don't believe me
+				// or have trouble understanding, erase the reorient() call and try playing
+				// the following moves: 4, 6, 8, 7.
+				//
+				// As you can see, the computer would fail to win across 0 2 1, because
+				// it's orientations are all out of whack.
+				// Instead of winning immediately, it lets the game become a draw.
+				gameBoard.reorient();
 			}
 			else
 			{

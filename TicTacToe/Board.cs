@@ -71,10 +71,10 @@
 		/// <summary>
 		/// Gets the square with respect to the current orientation.
 		/// Looks incredibly simple and useless, but compared with older
-		/// revisions, it saves tons of code and heavily increases
+		/// revisions, this helps save tons of code and heavily increases
 		/// the performance of this app.
 		/// </summary>
-		/// <param name="index">The index of the board you wish to retrieve.</param>
+		/// <param name="index">The index on the board you wish to retrieve.</param>
 		/// <returns></returns>
 		public btnSquare get(uint index)
 		{
@@ -86,6 +86,10 @@
 		/// 
 		/// Returns whether or not the board has been iterated through
 		/// all of it's orientations.
+		/// 
+		/// It's important to use a do while() with this, and not a for / while,
+		/// since this function will change to the next orientation
+		/// before returning whether the end was reached or not.
 		/// </summary>
 		public bool rotate()
 		{
@@ -96,6 +100,14 @@
 			}
 			++orientation;
 			return false;
+		}
+
+		/// <summary>
+		/// Reset the board to the standard position.
+		/// </summary>
+		public void reorient()
+		{
+			orientation = 0;
 		}
 	}
 }
