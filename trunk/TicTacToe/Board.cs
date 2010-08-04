@@ -84,7 +84,7 @@
 		/// <summary>
 		/// Changes the board to the next orientation.
 		/// 
-		/// Returns whether or not the board has been iterated through
+		/// Returns "false" when the board has been iterated through
 		/// all of it's orientations.
 		/// 
 		/// It's important to use a do while() with this, and not a for / while,
@@ -95,11 +95,10 @@
 		{
 			if (orientation == orientations.Length - 1)
 			{
-				orientation = 0;
-				return true;
-			}
-			++orientation;
-			return false;
+				reorient();
+				return false;
+			} ++orientation;
+			return true;
 		}
 
 		/// <summary>
