@@ -1,5 +1,4 @@
-﻿using TicTacToe;
-namespace TicTacToe
+﻿namespace TicTacToe
 {
 	partial class frmMain
 	{
@@ -21,7 +20,7 @@ namespace TicTacToe
 			base.Dispose(disposing);
 		}
 
-		#region Windows Form Designer generated code
+		#region Form Designer Generated Code
 
 		/// <summary>
 		/// Required method for Designer support - do not modify
@@ -197,102 +196,57 @@ namespace TicTacToe
 			//
 			// Button9
 			//
-			this.Button9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-			this.Button9.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold);
-			this.Button9.ForeColor = System.Drawing.Color.Yellow;
-			this.Button9.Location = new System.Drawing.Point(149, 159);
+			this.Button9.Location = new System.Drawing.Point(149, 158);
 			this.Button9.Name = "Button9";
-			this.Button9.Size = new System.Drawing.Size(65, 70);
 			this.Button9.TabIndex = 26;
-			this.Button9.UseVisualStyleBackColor = false;
 			//
 			// Button8
 			//
-			this.Button8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-			this.Button8.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold);
-			this.Button8.ForeColor = System.Drawing.Color.Yellow;
 			this.Button8.Location = new System.Drawing.Point(78, 158);
 			this.Button8.Name = "Button8";
-			this.Button8.Size = new System.Drawing.Size(65, 70);
 			this.Button8.TabIndex = 25;
-			this.Button8.UseVisualStyleBackColor = false;
 			//
 			// Button7
 			//
-			this.Button7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-			this.Button7.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold);
-			this.Button7.ForeColor = System.Drawing.Color.Yellow;
 			this.Button7.Location = new System.Drawing.Point(7, 158);
 			this.Button7.Name = "Button7";
-			this.Button7.Size = new System.Drawing.Size(65, 70);
 			this.Button7.TabIndex = 24;
-			this.Button7.UseVisualStyleBackColor = false;
 			//
 			// Button6
 			//
-			this.Button6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-			this.Button6.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold);
-			this.Button6.ForeColor = System.Drawing.Color.Yellow;
-			this.Button6.Location = new System.Drawing.Point(149, 83);
+			this.Button6.Location = new System.Drawing.Point(149, 82);
 			this.Button6.Name = "Button6";
-			this.Button6.Size = new System.Drawing.Size(65, 70);
 			this.Button6.TabIndex = 23;
-			this.Button6.UseVisualStyleBackColor = false;
 			//
 			// Button5
 			//
-			this.Button5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-			this.Button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold);
-			this.Button5.ForeColor = System.Drawing.Color.Yellow;
 			this.Button5.Location = new System.Drawing.Point(78, 82);
 			this.Button5.Name = "Button5";
-			this.Button5.Size = new System.Drawing.Size(65, 70);
 			this.Button5.TabIndex = 22;
-			this.Button5.UseVisualStyleBackColor = false;
 			//
 			// Button4
 			//
-			this.Button4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-			this.Button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold);
-			this.Button4.ForeColor = System.Drawing.Color.Yellow;
 			this.Button4.Location = new System.Drawing.Point(7, 82);
 			this.Button4.Name = "Button4";
-			this.Button4.Size = new System.Drawing.Size(65, 70);
 			this.Button4.TabIndex = 21;
-			this.Button4.UseVisualStyleBackColor = false;
 			//
 			// Button3
 			//
-			this.Button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-			this.Button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold);
-			this.Button3.ForeColor = System.Drawing.Color.Yellow;
-			this.Button3.Location = new System.Drawing.Point(149, 7);
+			this.Button3.Location = new System.Drawing.Point(149, 6);
 			this.Button3.Name = "Button3";
-			this.Button3.Size = new System.Drawing.Size(65, 70);
 			this.Button3.TabIndex = 20;
-			this.Button3.UseVisualStyleBackColor = false;
 			//
 			// Button2
 			//
-			this.Button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-			this.Button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold);
-			this.Button2.ForeColor = System.Drawing.Color.Yellow;
 			this.Button2.Location = new System.Drawing.Point(78, 6);
 			this.Button2.Name = "Button2";
-			this.Button2.Size = new System.Drawing.Size(65, 70);
 			this.Button2.TabIndex = 19;
-			this.Button2.UseVisualStyleBackColor = false;
 			//
 			// Button1
 			//
-			this.Button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-			this.Button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold);
-			this.Button1.ForeColor = System.Drawing.Color.Yellow;
 			this.Button1.Location = new System.Drawing.Point(7, 6);
 			this.Button1.Name = "Button1";
-			this.Button1.Size = new System.Drawing.Size(65, 70);
 			this.Button1.TabIndex = 18;
-			this.Button1.UseVisualStyleBackColor = false;
 			//
 			// frmMain
 			//

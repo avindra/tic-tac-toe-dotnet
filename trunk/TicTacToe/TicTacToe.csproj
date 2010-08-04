@@ -84,6 +84,9 @@
     <Compile Include="btnSquare.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="btnSquare.Designer.cs">
+      <DependentUpon>btnSquare.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -92,6 +95,9 @@
     </Compile>
     <Compile Include="Properties\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="btnSquare.resx">
+      <DependentUpon>btnSquare.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
     </EmbeddedResource>
