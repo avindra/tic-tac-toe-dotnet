@@ -61,16 +61,16 @@ namespace TicTacToe
 		private void makeMove(object sender, EventArgs e)
 		{
 			btnSquare button_pressed = (btnSquare)sender;
-			lblturns.Text = ++turns + " Turns";
-			if (lblTurn.Text == "X")
+			lblNoTurns.Text = ++turns + " Turns";
+			if (lblWhoseTurn.Text == "X")
 			{
 				button_pressed.setX();
-				lblTurn.Text = "O";
+				lblWhoseTurn.Text = "O";
 			}
 			else
 			{
 				button_pressed.setO();
-				lblTurn.Text = "X";
+				lblWhoseTurn.Text = "X";
 			}
 			if (Winner())
 				return;
@@ -467,7 +467,7 @@ namespace TicTacToe
 			turns = 0;
 			for (int i = 8; i >= 0; --i)
 				btnArray[i].unset();
-			lblTurn.Text = "X";
+			lblWhoseTurn.Text = "X";
 			blnComp = true;
 		}
 	}

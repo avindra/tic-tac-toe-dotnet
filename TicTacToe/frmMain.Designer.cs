@@ -28,8 +28,8 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.lblturns = new System.Windows.Forms.Label();
-			this.GroupBox1 = new System.Windows.Forms.GroupBox();
+			this.lblNoTurns = new System.Windows.Forms.Label();
+			this.grpDifficulty = new System.Windows.Forms.GroupBox();
 			this.radImp = new System.Windows.Forms.RadioButton();
 			this.radHard = new System.Windows.Forms.RadioButton();
 			this.radNormal = new System.Windows.Forms.RadioButton();
@@ -39,34 +39,34 @@
 			this.rad2P = new System.Windows.Forms.RadioButton();
 			this.radComp = new System.Windows.Forms.RadioButton();
 			this.btnNewGame = new System.Windows.Forms.Button();
-			this.lblTurn = new System.Windows.Forms.Label();
-			this.GroupBox1.SuspendLayout();
+			this.lblWhoseTurn = new System.Windows.Forms.Label();
+			this.grpDifficulty.SuspendLayout();
 			this.grpMode.SuspendLayout();
 			this.SuspendLayout();
-			//
-			// lblturns
-			//
-			this.lblturns.Location = new System.Drawing.Point(19, 245);
-			this.lblturns.Name = "lblturns";
-			this.lblturns.Size = new System.Drawing.Size(195, 28);
-			this.lblturns.TabIndex = 32;
-			//
-			// GroupBox1
-			//
-			this.GroupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.GroupBox1.Controls.Add(this.radImp);
-			this.GroupBox1.Controls.Add(this.radHard);
-			this.GroupBox1.Controls.Add(this.radNormal);
-			this.GroupBox1.Controls.Add(this.radEasy);
-			this.GroupBox1.Location = new System.Drawing.Point(244, 148);
-			this.GroupBox1.Name = "GroupBox1";
-			this.GroupBox1.Size = new System.Drawing.Size(181, 80);
-			this.GroupBox1.TabIndex = 31;
-			this.GroupBox1.TabStop = false;
-			this.GroupBox1.Text = "Difficulty";
-			//
+			// 
+			// lblNoTurns
+			// 
+			this.lblNoTurns.Location = new System.Drawing.Point(12, 251);
+			this.lblNoTurns.Name = "lblNoTurns";
+			this.lblNoTurns.Size = new System.Drawing.Size(195, 28);
+			this.lblNoTurns.TabIndex = 32;
+			// 
+			// grpDifficulty
+			// 
+			this.grpDifficulty.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.grpDifficulty.Controls.Add(this.radImp);
+			this.grpDifficulty.Controls.Add(this.radHard);
+			this.grpDifficulty.Controls.Add(this.radNormal);
+			this.grpDifficulty.Controls.Add(this.radEasy);
+			this.grpDifficulty.Location = new System.Drawing.Point(244, 148);
+			this.grpDifficulty.Name = "grpDifficulty";
+			this.grpDifficulty.Size = new System.Drawing.Size(181, 80);
+			this.grpDifficulty.TabIndex = 31;
+			this.grpDifficulty.TabStop = false;
+			this.grpDifficulty.Text = "Difficulty";
+			// 
 			// radImp
-			//
+			// 
 			this.radImp.AutoSize = true;
 			this.radImp.Checked = true;
 			this.radImp.Font = new System.Drawing.Font("Arial", 9.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -78,9 +78,9 @@
 			this.radImp.TabStop = true;
 			this.radImp.Text = "Impossible";
 			this.radImp.UseVisualStyleBackColor = true;
-			//
+			// 
 			// radHard
-			//
+			// 
 			this.radHard.AutoSize = true;
 			this.radHard.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.radHard.Location = new System.Drawing.Point(125, 19);
@@ -89,9 +89,9 @@
 			this.radHard.TabIndex = 2;
 			this.radHard.Text = "Hard";
 			this.radHard.UseVisualStyleBackColor = true;
-			//
+			// 
 			// radNormal
-			//
+			// 
 			this.radNormal.AutoSize = true;
 			this.radNormal.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.radNormal.Location = new System.Drawing.Point(61, 19);
@@ -100,9 +100,9 @@
 			this.radNormal.TabIndex = 1;
 			this.radNormal.Text = "Normal";
 			this.radNormal.UseVisualStyleBackColor = true;
-			//
+			// 
 			// radEasy
-			//
+			// 
 			this.radEasy.AutoSize = true;
 			this.radEasy.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.radEasy.Location = new System.Drawing.Point(7, 19);
@@ -111,9 +111,9 @@
 			this.radEasy.TabIndex = 0;
 			this.radEasy.Text = "Easy";
 			this.radEasy.UseVisualStyleBackColor = true;
-			//
+			// 
 			// btnExit
-			//
+			// 
 			this.btnExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnExit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
 			this.btnExit.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
@@ -124,9 +124,9 @@
 			this.btnExit.Text = "Exit Game";
 			this.btnExit.UseVisualStyleBackColor = false;
 			this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
-			//
+			// 
 			// grpMode
-			//
+			// 
 			this.grpMode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.grpMode.Controls.Add(this.rad2P);
 			this.grpMode.Controls.Add(this.radComp);
@@ -136,9 +136,9 @@
 			this.grpMode.TabIndex = 29;
 			this.grpMode.TabStop = false;
 			this.grpMode.Text = "Game Mode";
-			//
+			// 
 			// rad2P
-			//
+			// 
 			this.rad2P.AutoSize = true;
 			this.rad2P.Location = new System.Drawing.Point(12, 39);
 			this.rad2P.Name = "rad2P";
@@ -146,9 +146,9 @@
 			this.rad2P.TabIndex = 12;
 			this.rad2P.Text = "2 Player";
 			this.rad2P.UseVisualStyleBackColor = true;
-			//
+			// 
 			// radComp
-			//
+			// 
 			this.radComp.AutoSize = true;
 			this.radComp.Checked = true;
 			this.radComp.Location = new System.Drawing.Point(11, 17);
@@ -158,9 +158,9 @@
 			this.radComp.TabStop = true;
 			this.radComp.Text = "Computer";
 			this.radComp.UseVisualStyleBackColor = true;
-			//
+			// 
 			// btnNewGame
-			//
+			// 
 			this.btnNewGame.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnNewGame.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
 			this.btnNewGame.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -171,35 +171,35 @@
 			this.btnNewGame.Text = "New Game";
 			this.btnNewGame.UseVisualStyleBackColor = false;
 			this.btnNewGame.Click += new System.EventHandler(this.btnNewGame_Click);
-			//
-			// lblTurn
-			//
-			this.lblTurn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.lblTurn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-			this.lblTurn.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.lblTurn.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblTurn.Location = new System.Drawing.Point(328, 6);
-			this.lblTurn.Name = "lblTurn";
-			this.lblTurn.Size = new System.Drawing.Size(97, 50);
-			this.lblTurn.TabIndex = 27;
-			this.lblTurn.Text = "X";
-			this.lblTurn.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			//
+			// 
+			// lblWhoseTurn
+			// 
+			this.lblWhoseTurn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblWhoseTurn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+			this.lblWhoseTurn.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.lblWhoseTurn.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblWhoseTurn.Location = new System.Drawing.Point(328, 6);
+			this.lblWhoseTurn.Name = "lblWhoseTurn";
+			this.lblWhoseTurn.Size = new System.Drawing.Size(97, 50);
+			this.lblWhoseTurn.TabIndex = 27;
+			this.lblWhoseTurn.Text = "X";
+			this.lblWhoseTurn.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
 			// frmMain
-			//
+			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(436, 322);
-			this.Controls.Add(this.lblturns);
-			this.Controls.Add(this.GroupBox1);
+			this.Controls.Add(this.lblNoTurns);
+			this.Controls.Add(this.grpDifficulty);
 			this.Controls.Add(this.btnExit);
 			this.Controls.Add(this.grpMode);
 			this.Controls.Add(this.btnNewGame);
-			this.Controls.Add(this.lblTurn);
+			this.Controls.Add(this.lblWhoseTurn);
 			this.Name = "frmMain";
 			this.Text = "Tic Tac Toe";
-			this.GroupBox1.ResumeLayout(false);
-			this.GroupBox1.PerformLayout();
+			this.grpDifficulty.ResumeLayout(false);
+			this.grpDifficulty.PerformLayout();
 			this.grpMode.ResumeLayout(false);
 			this.grpMode.PerformLayout();
 			this.ResumeLayout(false);
@@ -208,8 +208,8 @@
 
 		#endregion
 
-		internal System.Windows.Forms.Label lblturns;
-		internal System.Windows.Forms.GroupBox GroupBox1;
+		internal System.Windows.Forms.Label lblNoTurns;
+		internal System.Windows.Forms.GroupBox grpDifficulty;
 		internal System.Windows.Forms.RadioButton radImp;
 		internal System.Windows.Forms.RadioButton radHard;
 		internal System.Windows.Forms.RadioButton radNormal;
@@ -219,7 +219,7 @@
 		internal System.Windows.Forms.RadioButton rad2P;
 		internal System.Windows.Forms.RadioButton radComp;
 		internal System.Windows.Forms.Button btnNewGame;
-		internal System.Windows.Forms.Label lblTurn;
+		internal System.Windows.Forms.Label lblWhoseTurn;
 	}
 }
 
