@@ -48,9 +48,12 @@ namespace TicTacToe
 		}
 		#endregion
 
+
 		/// <summary>
-		/// The method handler for all of the buttons being clicked.
+		/// The event handler for all of the buttons being clicked.
 		/// </summary>
+		/// <param name="sender">The button with which this call is associated.</param>
+		/// <param name="e">The event parameter. Just pass one if you have one, or give it a null.</param>
 		private void makeMove(object sender, EventArgs e)
 		{
 			btnSquare button_pressed = (btnSquare)sender;
