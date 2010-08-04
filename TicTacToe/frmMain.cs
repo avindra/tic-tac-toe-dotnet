@@ -21,9 +21,26 @@ namespace TicTacToe
 		public frmMain()
 		{
 			InitializeComponent();
-			btnArray = new btnSquare[] { Button1, Button2, Button3, Button4, Button5, Button6, Button7, Button8, Button9 };
+			btnArray = new btnSquare[9];
+			btnSquare temp;
+			int lastTabIndex = 18, currentX = 7, spaceX = 70, currentY = -70, spaceY = 76;
 			for (uint i = 0; i < 9; ++i)
-				btnArray[i].Click += new System.EventHandler(this.makeMove);
+			{
+				if (i % 3 == 0)
+				{
+					currentX = 7;
+					currentY += spaceY;
+				}
+				else
+				{
+					currentX += spaceX;
+				}
+				temp = btnArray[i] = new btnSquare();
+				temp.TabIndex = lastTabIndex++;
+				temp.Location = new System.Drawing.Point(currentX, currentY);
+				temp.Click += new System.EventHandler(this.makeMove);
+				this.Controls.Add(temp);
+			}
 		}
 
 		#region Minor Event Handlers
@@ -306,7 +323,7 @@ namespace TicTacToe
 					}
 					if (defend)
 					{
-						btnSquare theMove = Button1;
+						btnSquare theMove = btnArray[0];
 						while (!theMove.Enabled || object.ReferenceEquals(theMove, badbut) || object.ReferenceEquals(theMove, rot[8]))
 						{
 							theMove = btnArray[generator.Next(1, 8)];
@@ -315,8 +332,8 @@ namespace TicTacToe
 					}
 				}
 				//center
-				if (Button5.Enabled)
-					return Button5;
+				if (btnArray[4].Enabled)
+					return btnArray[4];
 				//opposite corner
 				uint[][] opposites = {
 					new uint[] {0, 8},
@@ -328,29 +345,23 @@ namespace TicTacToe
 					if (btnArray[inner[1]].isX() && btnArray[inner[0]].Enabled) return btnArray[inner[0]];
 				}
 				//empty corner
-				btnSquare[] corners = {
-					Button1,
-					Button3,
-					Button7,
-					Button9
+				int[] corners = {
+					0, 2, 6, 8
 				};
-				btnSquare cornPlay = corners[generator.Next(0, 3)];
+				btnSquare cornPlay = btnArray[corners[generator.Next(0, 3)]];
 				while (!cornPlay.Enabled)
 				{
-					cornPlay = corners[generator.Next(0, 3)];
+					cornPlay = btnArray[corners[generator.Next(0, 3)]];
 				}
 				if (cornPlay.Enabled) return cornPlay;
 				//empty side
-				btnSquare[] sides = {
-					Button2,
-					Button4,
-					Button6,
-					Button8
+				int[] sides = {
+					1, 3, 5, 7
 				};
-				btnSquare sidePlay = sides[generator.Next(0, 3)];
+				btnSquare sidePlay = btnArray[sides[generator.Next(0, 3)]];
 				while (!sidePlay.Enabled)
 				{
-					sidePlay = sides[generator.Next(0, 3)];
+					sidePlay = btnArray[sides[generator.Next(0, 3)]];
 				}
 				return sidePlay;
 			}
