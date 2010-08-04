@@ -10,8 +10,14 @@ namespace TicTacToe
 		/// in this game.
 		/// </summary>
 		btnSquare[] btnArray;
+
+		/// <summary>
+		/// The count of the amount of turns. Should be reset every game.
+		/// </summary>
 		uint turns = 0;
+
 		bool blnComp = true;
+
 		public frmMain()
 		{
 			InitializeComponent();
@@ -20,6 +26,7 @@ namespace TicTacToe
 				btnArray[i].Click += new System.EventHandler(this.makeMove);
 		}
 
+		#region Minor Event Handlers
 		private void btnNewGame_Click(object sender, EventArgs e)
 		{
 			resetGame();
@@ -29,6 +36,7 @@ namespace TicTacToe
 		{
 			Application.Exit();
 		}
+		#endregion
 
 		/// <summary>
 		/// The method handler for all of the buttons being clicked.
@@ -89,6 +97,7 @@ namespace TicTacToe
 				 : null;
 		}
 
+		#region Computer Decision Making
 		/// <summary>
 		/// Returns the square which the Computer would pick,
 		/// based on the selected difficulty.
@@ -103,7 +112,7 @@ namespace TicTacToe
 			    each and every possibility, which would take forever and would lead to 
 			    unnecessarily complex code.
 			 */
-			uint[][] orientations = new uint[][] {
+			uint[][] orientations = {
 				new uint[] { // north
 					0, 1, 2,
 					3, 4, 5,
@@ -177,7 +186,7 @@ namespace TicTacToe
 				*/
 			};
 			//win
-			if (radHard.Checked || radImp.Checked)
+			if (radHard.Checked || radImp.Checked || (radNormal.Checked && generator.Next(0, 2) >= 1))
 			{
 				foreach (uint[] rot in orientations)
 				{
@@ -190,7 +199,7 @@ namespace TicTacToe
 				}
 			}
 			//defend
-			if (radNormal.Checked || radHard.Checked || radImp.Checked)
+			if (radHard.Checked || radImp.Checked || radNormal.Checked)
 			{
 				foreach (uint[] rot in orientations)
 				{
@@ -243,25 +252,14 @@ namespace TicTacToe
 				//<-------------------------------------------------------------------------->
 				//							BLOCK FORKING
 				//<-------------------------------------------------------------------------->
-				//<--f-->
-				foreach (uint[] rot in orientations)
-				{
-					uint[][] checks = {
-						new uint[] {0, 2, 5},
-						new uint[] {0, 5, 2},
-						new uint[] {5, 2, 0}
-					};
-					btnSquare temp;
-					for (uint i = 0; i < checks.Length; ++i)
-					{
-						temp = checkMove(rot, checks[i], true);
-						if (temp != null) return temp;
-					}
-				}
 
 				foreach (uint[] rot in orientations)
 				{
 					uint[][] checks = {
+						//<--f-->
+						new uint[] {0, 2, 5},
+						new uint[] {0, 5, 2},
+						new uint[] {5, 2, 0},
 		 				//<--a-->
 						new uint[] {0, 2, 4},
 						new uint[] {0, 4, 2},
@@ -320,7 +318,7 @@ namespace TicTacToe
 				if (Button5.Enabled)
 					return Button5;
 				//opposite corner
-				uint[][] opposites = { 
+				uint[][] opposites = {
 					new uint[] {0, 8},
 					new uint[] {3, 7}
 				};
@@ -357,6 +355,8 @@ namespace TicTacToe
 				return sidePlay;
 			}
 
+			// randomly play a remaining square
+			// Theoretically, the code will never reach here.
 			btnSquare compMove = btnArray[generator.Next(0, 8)];
 			while (!compMove.Enabled)
 			{
@@ -364,6 +364,7 @@ namespace TicTacToe
 			}
 			return compMove;
 		}
+		#endregion
 
 		/// <summary>
 		/// Determines whether or not there is a winner,
@@ -372,7 +373,7 @@ namespace TicTacToe
 		public bool Winner()
 		{
 			uint[][] winPaths = {
-				// Straight across
+				// straight across
 				new uint[] {0, 1, 2},
 				new uint[] {3, 4, 5},
 				new uint[] {6, 7, 8},
@@ -428,21 +429,20 @@ namespace TicTacToe
 			}
 			if (blnDraw)
 			{
-				prompt(radImp.Checked ? "I told you it was impossible! Want to try again, even though you won't win?" : "Do you want to play again?", radImp.Checked ? "It's a Draw ~ Give Up Already!" : "It's a Draw!!");
+				prompt(radImp.Checked ? "I told you it was impossible!\nWant to try again, even though you won't win?" : "Do you want to play again?", radImp.Checked ? "It's a Draw ~ Give Up Already!" : "It's a Draw!!");
 				return true;
 			}
 			return false;
 		}
 
 		/// <summary>
-		/// Ask the user if they want to play again or not, with custom messages.
+		/// Ask the user if they want to play again or not, with a custom message and title.
 		/// </summary>
 		/// <param name="msg">The message you want to ask the user about.</param>
 		/// <param name="title">The title of the dialog.</param>
 		private void prompt(String msg, String title)
 		{
-			DialogResult playgain = MessageBox.Show(msg, title, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
-			if (playgain == DialogResult.Yes)
+			if (MessageBox.Show(msg, title, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1)== DialogResult.Yes)
 				resetGame();
 			else
 				Application.Exit();
@@ -454,12 +454,8 @@ namespace TicTacToe
 		private void resetGame()
 		{
 			turns = 0;
-			btnSquare temp;
-			for (uint i = 0; i < 9; ++i)
-			{
-				temp = btnArray[i];
-				temp.unset();
-			}
+			for (int i = 8; i >= 0; --i)
+				btnArray[i].unset();
 			lblTurn.Text = "X";
 			blnComp = true;
 		}
