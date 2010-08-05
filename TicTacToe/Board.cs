@@ -97,7 +97,8 @@
 			{
 				reorient();
 				return false;
-			} ++orientation;
+			}
+			++orientation;
 			return true;
 		}
 

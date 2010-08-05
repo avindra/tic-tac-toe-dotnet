@@ -272,7 +272,9 @@ namespace TicTacToe
 				}
 				//empty corner
 				uint[] corners = {
-					0, 2, 6, 8
+					0,  2,
+
+					6,  8
 				};
 				btnSquare cornPlay = gameBoard.get(corners[generator.Next(0, 3)]);
 				while (!cornPlay.Enabled)
@@ -282,7 +284,9 @@ namespace TicTacToe
 				if (cornPlay.Enabled) return cornPlay;
 				//empty side
 				uint[] sides = {
-					1, 3, 5, 7
+					 1, 
+				   3,  5,
+				     7  
 				};
 				btnSquare sidePlay = gameBoard.get(sides[generator.Next(0, 3)]);
 				while (!sidePlay.Enabled)
