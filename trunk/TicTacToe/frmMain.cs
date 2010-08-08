@@ -33,8 +33,52 @@ namespace TicTacToe
 			gameBoard = new Board(btnArray);
 #if DEBUG
 			this.Text += " (debug mode)";
+			ToolStripMenuItem mnuDbg = new ToolStripMenuItem();
+			mnuDbg.Text = "Debug";
+
+			ToolStripMenuItem mnuBench = new ToolStripMenuItem();
+			mnuBench.Text = "Perform Benchmark";
+			mnuBench.Click += new System.EventHandler(doBenchmark);
+			mnuDbg.DropDownItems.AddRange(new ToolStripMenuItem [] {
+				mnuBench
+			});
+			mnuMain.Items.Insert(mnuMain.Items.Count - 1, mnuDbg);
 #endif
 		}
+
+#if DEBUG
+		/// <summary>
+		/// This performs the benchmarks and tries to make a statisically accurate figure from the runs.
+		/// </summary>
+		public void doBenchmark(object sender, EventArgs e)
+		{
+			long[] benches = new long[10];
+			for (int i = benches.Length - 1; i >= 0; --i)
+			{
+				benches[i] = bench();
+			}
+			long sum = 0;
+			string benchlog = "";
+			for (int i = 0; i < benches.Length; ++i)
+			{
+				sum += benches[i];
+				benchlog += "["+i+"]=" + benches[i] + "\n";
+			}
+			MessageBox.Show("Computer choice algorithm benchmark results:\n\n(Lower values are better, results vary from computer to computer)\n\nPARAMETERS:\nRuns: 10\nIterations per run: 1000\n\n" + benchlog + "\nAverage benchmark: " + (sum / benches.Length), "Benchmark Results", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+		}
+
+		/// <summary>
+		/// Run a single benchmark.
+		/// </summary>
+		public long bench()
+		{
+	
+			System.Diagnostics.Stopwatch x = System.Diagnostics.Stopwatch.StartNew();
+			for (int i = 1000; i >= 0; --i) ComputerMove();
+			x.Stop();
+			return x.ElapsedMilliseconds;
+		}
+#endif
 
 		#region Minor Event Handlers
 		private void btnNewGame_Click(object sender, EventArgs e)
@@ -45,6 +89,20 @@ namespace TicTacToe
 		private void btnExit_Click(object sender, EventArgs e)
 		{
 			Application.Exit();
+		}
+		private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			resetGame();
+		}
+
+		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			Application.Exit();
+		}
+
+		private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show("Tic-Tic-Toe.NET. Written in Visual Basic .NET, then ported over to C#. This application is only licensed for educational or personal uses, and is not authorized for commercial uses.", "About this game", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1);
 		}
 		#endregion
 
