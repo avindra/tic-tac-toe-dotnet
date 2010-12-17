@@ -196,6 +196,8 @@ namespace TicTacToe
 					_ _ _
 					_ _ _
 				*/
+		
+				
 				new uint[] {0, 2, 1},
 				/*
 					O ? O
