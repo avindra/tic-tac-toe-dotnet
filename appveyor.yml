@@ -1,0 +1,6 @@
+configuration:
+  - Release
+
+artifacts:
+  - path: 'TicTacToe\bin\**\*.exe'
+
