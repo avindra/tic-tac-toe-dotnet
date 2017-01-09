@@ -448,8 +448,6 @@ namespace TicTacToe
 		{
 			if (MessageBox.Show(msg, title, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1)== DialogResult.Yes)
 				resetGame();
-			else
-				Application.Exit();
 		}
 
 		/// <summary>
